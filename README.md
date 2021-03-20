@@ -13,6 +13,8 @@
     ```powershell
     Update-Database
     ```
+    
+3. [IMPORTANT] Launch the project and go to ` /InitDB ` in order to create Roles in database
 
 ## Installed packages
 Via ` Tools > NuGet Package Manager > Package Manager Console `
