@@ -14,7 +14,7 @@
     Update-Database
     ```
     
-3. [IMPORTANT] Launch the project and go to ` /InitDB ` in order to create Roles in database
+3. [IMPORTANT] Launch the project and go to ` <your url>/InitDB ` in order to create Roles in database
 
 ## Installed packages
 Already installed via ` Tools > NuGet Package Manager > Package Manager Console `
