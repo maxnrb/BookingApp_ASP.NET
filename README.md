@@ -17,14 +17,8 @@
 3. [IMPORTANT] Launch the project and go to ` /InitDB ` in order to create Roles in database
 
 ## Installed packages
-Via ` Tools > NuGet Package Manager > Package Manager Console `
+Already installed via ` Tools > NuGet Package Manager > Package Manager Console `
 
-- EntityFrameworkCore for Microsoft SQL Server : 
-```powershell
-Install-Package Microsoft.EntityFrameworkCore.SqlServer
-```
-
-- EntityFrameworkCore Design in order to generate CRUD: 
-```powershell
-Install-Package Microsoft.EntityFrameworkCore.Design
-```
+- EntityFrameworkCore for Microsoft SQL Server: ` Microsoft.EntityFrameworkCore.SqlServer `
+- EntityFrameworkCore Design in order to generate CRUD: `  Microsoft.EntityFrameworkCore.Design `
+- Identity UI for login/register interfaces: ` Microsoft.AspNetCore.Identity.UI `
