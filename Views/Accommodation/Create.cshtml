@@ -1,0 +1,123 @@
+﻿@model BookingApp.Models.Accommodation
+
+@{
+    ViewData["Title"] = "Création Logement";
+}
+
+<div class="card" style="margin:2em;">
+
+    <div class="card-header">
+        <h4>Ajouter un nouveau logement</h4>
+    </div>
+
+    <div class="card-body" style="padding:1em">
+        <h5>Informations générales :</h5>
+
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row form-group">
+                <div class="col-md-8">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Studio entier à Paris avec vue sur le Jardin de Tuileries" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Type" class="control-label"></label>
+                    <select asp-for="Type" class="form-control">
+                        <option value="Appartement">Appartement</option>
+                        <option value="Maison">Maison</option>
+                        <option value="Chambre dans un appartement">Chambre dans un appartement</option>
+                        <option value="Chambre dans une maison">Chambre dans une maison</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <hr class="solid">
+            <h5>Adresse :</h5>
+
+            <div class="row form-group">
+                <div class="col-md-7">
+                    <label asp-for="Address.StreetAndNumber" class="control-label"></label>
+                    <input asp-for="Address.StreetAndNumber" class="form-control" placeholder="92 Boulevard de Prague" />
+                    <span asp-validation-for="Address.StreetAndNumber" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-5">
+                    <label asp-for="Address.Complement" class="control-label"></label>
+                    <input asp-for="Address.Complement" class="form-control" placeholder="Appartement 116" />
+                    <span asp-validation-for="Address.Complement" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <label asp-for="Address.City" class="control-label"></label>
+                    <input asp-for="Address.City" class="form-control" placeholder="Paris" />
+                    <span asp-validation-for="Address.City" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Address.PostalCode" class="control-label"></label>
+                    <input asp-for="Address.PostalCode" class="form-control" placeholder="75001" />
+                    <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Address.Country" class="control-label"></label>
+                    <input asp-for="Address.Country" class="form-control" placeholder="France" />
+                    <span asp-validation-for="Address.Country" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr class="solid">
+            <h5>Règlement intérieur :</h5>
+
+            <div class="row form-group">
+                <div class="col">
+                    <label for="inputArrivalHour">Heure minimum d'arrivée</label>
+                    <input type="time" class="form-control" id="inputArrivalHour" name="arrivalHour"
+                           value="">
+                </div>
+                <div class="col">
+                    <label for="inputDepartureHour">Heure maximum de départ</label>
+                    <input type="time" class="form-control" id="inputDepartureHour" name="departureHour"
+                           value="">
+                </div>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="petAllowedCheckbox" name="petAllowed">
+                <label class="form-check-label" for="petAllowedCheckbox">Animaux autorisés</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="partyAllowedCheckbox" name="partyAllowed">
+                <label class="form-check-label" for="partyAllowedCheckbox">Fêtes autorisés</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="smokeAllowedCheckbox" name="smokeAllowed">
+                <label class="form-check-label" for="smokeAllowedCheckbox">Logement fumeur</label>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

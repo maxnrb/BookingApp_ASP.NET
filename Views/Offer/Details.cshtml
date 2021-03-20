@@ -1,0 +1,54 @@
+﻿@model BookingApp.Models.Offer
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Offer</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Accommodation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Accommodation.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AddingDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartAvailability)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StartAvailability)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EndAvailability)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EndAvailability)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PricePerNight)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PricePerNight)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CleaningFee)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CleaningFee)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

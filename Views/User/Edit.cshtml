@@ -1,0 +1,62 @@
+﻿@model BookingApp.Controllers.UserController
+
+@{
+    ViewData["Title"] = "Edition Utilisateur";
+}
+
+<div class="card" style="margin:2em;">
+
+    <div class="card-header">
+        <h4>Modification d'un utilisateur</h4>
+    </div>
+
+    <div class="card-body" style="padding:1em">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <label asp-for="Input.FirstName" class="control-label"></label>
+                    <input asp-for="Input.FirstName" class="form-control"/>
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label  asp-for="Input.LastName" class="control-label"></label>
+                    <input asp-for="Input.LastName" class="form-control"/>
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-8">
+                    <label asp-for="UserEmail" class="control-label"></label>
+                    <input asp-for="UserEmail" class="form-control" disabled/>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Input.Role" class="control-label"></label>
+                    <select asp-for="Input.Role" class="form-control">
+                        <option value="User">User</option>
+                        <option value="Host">Host</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

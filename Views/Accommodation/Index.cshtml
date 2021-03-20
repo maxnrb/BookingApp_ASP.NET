@@ -1,0 +1,104 @@
+﻿@model IEnumerable<BookingApp.Models.Accommodation>
+
+@{
+    ViewData["Title"] = "CRUD Logement";
+}
+
+<div class="card" style="margin-top:1em;">
+    <div class="card-body table-responsive">
+
+        <div class="card-header">
+            <div class="row align-items-center">
+
+                <div class="col">
+                    <h2>Logement</h2>
+                </div>
+
+                <div class="col-auto">
+                    <input id="searchInput" class="form-control" type="text" placeholder="Rechercher">
+                </div>
+
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.User)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th style="text-align: right; padding-right: 1em;">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="resultTable">
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @item.Address.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td style="text-align:right; padding-right:1em;">
+
+                        <form asp-action="Details" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                            <button style="background: none; padding: 0px; border: none;" type="submit">
+                                <i class="bi bi-eye-fill" style="color:dodgerblue; padding-right:1em;"></i>
+                            </button>
+                        </form>
+
+                        <form asp-action="Edit" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                            <button style="background: none; padding: 0px; border: none;" type="submit">
+                                <i class="bi bi-pencil-fill" style="color:orange;  padding-right:1em;"></i>
+                            </button>
+                        </form>
+
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                            <button style="background: none; padding: 0px; border: none;" type="submit">
+                                <i class="bi bi-trash-fill" style="color:red;"></i>
+                            </button>
+                        </form>
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+        <div>
+            <div style="float: left;">
+                <form asp-action="Create" method="get" style="display: inline-block;">
+                    <button class="btn btn-success" type="submit">
+                        <span class="bi bi-plus"></span> Ajouter
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
