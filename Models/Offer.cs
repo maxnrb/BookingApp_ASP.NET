@@ -27,8 +27,10 @@ namespace BookingApp.Models
 		[DataType(DataType.Date)]
 		public DateTime EndAvailability { get; set; }
 
+		[Display(Name = "Prix par nuit")]
 		public double PricePerNight { get; set; }
 
+		[Display(Name = "Frais de ménage")]
 		public double CleaningFee { get; set; }
 	}
 }

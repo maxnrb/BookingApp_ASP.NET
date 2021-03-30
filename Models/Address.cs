@@ -37,5 +37,10 @@ namespace BookingApp.Models
         {
 			return StreetAndNumber + ", " + Complement + "\n" + PostalCode + " " + City + ", " + Country;
         }
+
+		public String ShortAddress()
+        {
+			return City + ", " + Country;
+		}
 	}
 }
