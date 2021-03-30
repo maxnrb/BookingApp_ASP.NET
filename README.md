@@ -14,7 +14,13 @@
     Update-Database
     ```
     
-3. [IMPORTANT] Launch the project and go to ` /InitDB ` in order to create Roles in database
+3. [IMPORTANT] Launch the project and go to ` <your url>/InitDB ` in order to create Roles in database
+
+## Built With
+- [ASP.NET Core MVC](https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-5.0) - ASP.NET Core MVC is a rich framework for building web apps and APIs using the Model-View-Controller design pattern.
+- [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) - Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with many databases, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB.
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) - Microsoft SQL Server is a relational database management system developed by Microsoft.
+- [Bootstrap](https://getbootstrap.com/) - Bootstrap is a free and open-source CSS framework directed at responsive, designed for front-end web development.
 
 ## Add External Connexion
 - Google ([See documentation](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-5.0)) :
@@ -32,3 +38,8 @@ Already installed via ` Tools > NuGet Package Manager > Package Manager Console 
 - EntityFrameworkCore for Microsoft SQL Server: ` Microsoft.EntityFrameworkCore.SqlServer `
 - EntityFrameworkCore Design in order to generate CRUD: `  Microsoft.EntityFrameworkCore.Design `
 - Identity UI for login/register interfaces: ` Microsoft.AspNetCore.Identity.UI `
+
+## Author
+- [Amot98](https://github.com/Amot98)
+- [MaximeNrb](https://github.com/maximenrb)
+- [Lekolix](https://github.com/Lekolix)
