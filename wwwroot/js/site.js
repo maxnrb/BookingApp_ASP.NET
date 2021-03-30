@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 
+// Script for simple search in CRUD
 $(document).ready(function () {
 	$("#searchInput").on("keyup", function () {
 		var value = $(this).val().toLowerCase();
