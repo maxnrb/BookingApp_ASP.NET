@@ -16,21 +16,26 @@
     
 3. [IMPORTANT] Launch the project and go to ` <your url>/InitDB ` in order to create Roles in database
 
+## Add External Login/Register
+Firstly, you must enable secret storage, for this open .NET Core CLI in the project directory, go in ` View > Terminal ` or use ` Ctrl+ù `.
+Then, run the following command : 
+```powershell
+dotnet user-secrets init 
+```
+
+#### Google ([See documentation](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-5.0)) :
+* Store the Google client ID and secret :
+    
+    ```powershell
+    dotnet user-secrets set "Authentication:Google:ClientId" "<client-id>"
+    dotnet user-secrets set "Authentication:Google:ClientSecret" "<client-secret>"
+    ```
+        
 ## Built With
 - [ASP.NET Core MVC](https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-5.0) - ASP.NET Core MVC is a rich framework for building web apps and APIs using the Model-View-Controller design pattern.
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) - Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with many databases, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB.
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) - Microsoft SQL Server is a relational database management system developed by Microsoft.
 - [Bootstrap](https://getbootstrap.com/) - Bootstrap is a free and open-source CSS framework directed at responsive, designed for front-end web development.
-
-## Add External Connexion
-- Google ([See documentation](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-5.0)) :
-    1. Open .NET Core CLI in the project directory, for this go in ` View > Terminal ` or use ` Ctrl+ù `
-    2. Enable secret storage, run the following command : ` dotnet user-secrets init `
-    3. Store the Google client ID and secret : 
-        ```powershell
-        dotnet user-secrets set "Authentication:Google:ClientId" "<client-id>"
-        dotnet user-secrets set "Authentication:Google:ClientSecret" "<client-secret>"
-        ```
 
 ## Installed packages
 Already installed via ` Tools > NuGet Package Manager > Package Manager Console `
