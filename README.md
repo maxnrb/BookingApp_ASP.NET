@@ -16,6 +16,16 @@
     
 3. [IMPORTANT] Launch the project and go to ` /InitDB ` in order to create Roles in database
 
+## Add External Connexion
+- Google ([See documentation](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-5.0)) :
+    1. Open .NET Core CLI in the project directory, for this go in ` View > Terminal ` or use ` Ctrl+ù `
+    2. Enable secret storage, run the following command : ` dotnet user-secrets init `
+    3. Store the Google client ID and secret : 
+        ```powershell
+        dotnet user-secrets set "Authentication:Google:ClientId" "<client-id>"
+        dotnet user-secrets set "Authentication:Google:ClientSecret" "<client-secret>"
+        ```
+
 ## Installed packages
 Already installed via ` Tools > NuGet Package Manager > Package Manager Console `
 
