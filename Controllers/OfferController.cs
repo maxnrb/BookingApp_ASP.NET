@@ -70,7 +70,7 @@ namespace BookingApp.Controllers
         }
 
         // GET: Offer/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -144,7 +144,7 @@ namespace BookingApp.Controllers
         // POST: Offer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var offer = await _context.Offers.FindAsync(id);
             _context.Offers.Remove(offer);
@@ -155,6 +155,27 @@ namespace BookingApp.Controllers
         private bool OfferExists(Guid id)
         {
             return _context.Offers.Any(e => e.Id == id);
+        }
+
+        // GET: Offer/View/5
+        public async Task<IActionResult> View(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var offer = await _context.Offers
+                .Include(o => o.Accommodation)
+                .Include(o => o.Accommodation.Address)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            return View(offer);
         }
     }
 }
