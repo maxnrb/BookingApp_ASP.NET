@@ -1,65 +1,93 @@
 ﻿@model IEnumerable<BookingApp.Models.Offer>
 
 @{
-    ViewData["Title"] = "Offre";
+    ViewData["Title"] = "CRUD Offre";
 }
 
-<h1>Offre</h1>
+<div class="card" style="margin-top:1em;">
+    <div class="card-body table-responsive">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Accommodation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AddingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartAvailability)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndAvailability)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PricePerNight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CleaningFee)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Accommodation.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartAvailability)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndAvailability)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PricePerNight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CleaningFee)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <div class="card-header">
+            <div class="row align-items-center">
+
+                <div class="col">
+                    <h2>Offre</h2>
+                </div>
+
+                <div class="col-auto">
+                    <input id="searchInput" class="form-control" type="text" placeholder="Rechercher">
+                </div>
+
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accommodation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AddingDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartAvailability)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndAvailability)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PricePerNight)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CleaningFee)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Accommodation.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddingDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartAvailability)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndAvailability)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PricePerNight)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CleaningFee)
+                        </td>
+                        <td>
+                            <a asp-action="View" asp-route-id="@item.Id">View</a> |
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div>
+            <div style="float: left;">
+                <form asp-action="Create" method="get" style="display: inline-block;">
+                    <button class="btn btn-success" type="submit">
+                        <span class="bi bi-plus"></span> Ajouter
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
