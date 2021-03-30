@@ -18,6 +18,7 @@
 
 ## Add External Login/Register
 Firstly, you must enable secret storage, for this open .NET Core CLI in the project directory, go in ` View > Terminal ` or use ` Ctrl+ù `.
+
 Then, run the following command : 
 ```powershell
 dotnet user-secrets init 
