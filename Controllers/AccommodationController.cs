@@ -63,10 +63,12 @@ namespace BookingApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("Name, Type, Description")] Accommodation accommodation, 
-            [Bind("StreetAndNumber, Complement, City, PostalCode, Country")] Address address)
+            [Bind("Name, Type, Description")] Accommodation accommodation,
+            [Bind("StreetAndNumber, Complement, City, PostalCode, Country")] Address address,
+            [Bind("ArrivalHour, DepartureHour, PetAllowed, PartyAllowed, SmokeAllowed")] HouseRules houseRules)
         {
             accommodation.Address = address;
+            accommodation.HouseRules = houseRules;
             accommodation.UserId = (await _userManager.GetUserAsync(User)).Id;
 
             if (ModelState.IsValid)
@@ -90,6 +92,7 @@ namespace BookingApp.Controllers
 
             var accommodation = await _context.Accommodations
                 .Include(a => a.Address)
+                .Include(a => a.HouseRules)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (accommodation == null)
@@ -106,14 +109,18 @@ namespace BookingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, 
             [Bind("Id, Name, Type, Description")] Accommodation accommodation,
-            [Bind("Id, StreetAndNumber, Complement, City, PostalCode, Country")] Address address)
+            [Bind("Id, StreetAndNumber, Complement, City, PostalCode, Country")] Address address,
+            [Bind("Id, ArrivalHour, DepartureHour, PetAllowed, PartyAllowed, SmokeAllowed")] HouseRules houseRules)
         {
             if (id != accommodation.Id)
             {
                 return NotFound();
             }
 
+            // Get accommodation's user
+            accommodation.UserId = await _context.Accommodations.Where(a => a.Id == id).Select(a => a.UserId).SingleOrDefaultAsync();
             accommodation.Address = address;
+            accommodation.HouseRules = houseRules;
 
             if (ModelState.IsValid)
             {

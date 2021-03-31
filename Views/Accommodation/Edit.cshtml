@@ -15,8 +15,10 @@
 
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="Address.Id" />
+            <input type="hidden" asp-for="HouseRules.Id" />
 
             <div class="row form-group">
                 <div class="col-md-8">
@@ -85,28 +87,29 @@
 
             <div class="row form-group">
                 <div class="col">
-                    <label for="inputArrivalHour">Heure minimum d'arrivée</label>
-                    <input type="time" class="form-control" id="inputArrivalHour" name="arrivalHour"
-                           value="">
+                    <label asp-for="HouseRules.ArrivalHour" class="control-label"></label>
+                    <input asp-for="HouseRules.ArrivalHour" type="time" class="form-control">
+                    <span asp-validation-for="HouseRules.ArrivalHour" class="text-danger"></span>
                 </div>
+
                 <div class="col">
-                    <label for="inputDepartureHour">Heure maximum de départ</label>
-                    <input type="time" class="form-control" id="inputDepartureHour" name="departureHour"
-                           value="">
+                    <label asp-for="HouseRules.DepartureHour" class="control-label"></label>
+                    <input asp-for="HouseRules.DepartureHour" type="time" class="form-control">
+                    <span asp-validation-for="HouseRules.DepartureHour" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="petAllowedCheckbox" name="petAllowed">
-                <label class="form-check-label" for="petAllowedCheckbox">Animaux autorisés</label>
+                <input asp-for="HouseRules.PetAllowed" type="checkbox" class="form-check-input">
+                <label asp-for="HouseRules.PetAllowed" class="form-check-label"></label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="partyAllowedCheckbox" name="partyAllowed">
-                <label class="form-check-label" for="partyAllowedCheckbox">Fêtes autorisés</label>
+                <input asp-for="HouseRules.PartyAllowed" type="checkbox" class="form-check-input">
+                <label asp-for="HouseRules.PartyAllowed" class="form-check-label"></label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="smokeAllowedCheckbox" name="smokeAllowed">
-                <label class="form-check-label" for="smokeAllowedCheckbox">Logement fumeur</label>
+                <input asp-for="HouseRules.SmokeAllowed" type="checkbox" class="form-check-input">
+                <label asp-for="HouseRules.SmokeAllowed" class="form-check-label"></label>
             </div>
 
             <div class="form-group">

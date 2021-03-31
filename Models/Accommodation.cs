@@ -22,9 +22,10 @@ namespace BookingApp.Models
 		[Display(Name = "Adresse")]
 		public virtual Address Address { get; set; }
 
-		//private User user;
+		[Display(Name = "Règlement Intérieur")]
+		public virtual HouseRules HouseRules { get; set; }
+
 		//private List<Picture> pictures;
-		//private HouseRules houseRules;
 
 		[Required(ErrorMessage = "Vous devez entrer un nom pour votre logement")]
 		[Display(Name = "Nom")]
