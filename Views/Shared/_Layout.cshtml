@@ -45,11 +45,13 @@
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li><a class="dropdown-item" asp-controller="Accommodation" asp-action="Index">Logement</a></li>
                                     <li><a class="dropdown-item" asp-controller="Offer" asp-action="Index">Offre</a></li>
-                                    <li><a class="dropdown-item" href="">Réservation</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Booking" asp-action="Index">Réservation</a></li>
                                 </ul>
                             </li>
 
-                            @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin"))
+                            User user = await UserManager.GetUserAsync(User);
+
+                            if (user != null && await UserManager.IsInRoleAsync(user, "Admin"))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
