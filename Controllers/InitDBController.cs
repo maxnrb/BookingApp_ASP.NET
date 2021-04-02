@@ -43,17 +43,25 @@ namespace BookingApp.Controllers
             if (user == null)
             {
                 returnText += "Not connected. Can't add as Admin<br/>";
-            }
-            else if (!await _userManager.IsInRoleAsync(user, "Admin") )
-            {
-                await _userManager.AddToRoleAsync(user, "Admin");
-                await _signInManager.RefreshSignInAsync(user);
-                returnText += "Actual user set as Admin<br/>";
-            }
+            } 
             else
             {
-                returnText += "Actual user already set as Admin<br/>";
+                string actualRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+                if (!actualRole.Equals("Admin"))
+                {
+                    await _userManager.RemoveFromRoleAsync(user, actualRole);
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                    await _signInManager.RefreshSignInAsync(user);
+
+                    returnText += "Actual user set as Admin<br/>";
+                }
+                else
+                {
+                    returnText += "Actual user already set as Admin<br/>";
+                }
             }
+
 
             return base.Content(returnText, "text/html");
         }
