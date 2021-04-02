@@ -125,8 +125,12 @@ namespace BookingApp.Areas.Identity.Pages.Account
                 var user = new User { UserName = Input.Email, Email = Input.Email };
 
                 var result = await _userManager.CreateAsync(user);
+
                 if (result.Succeeded)
                 {
+                    // Add user default role
+                    await _userManager.AddToRoleAsync(user, "User");
+
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
