@@ -1,0 +1,60 @@
+﻿@model BookingApp.Models.Booking
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Offer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Offer.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingDateTime)
+        </dd>
+        <dt class="col-sm-2">
+            Date et horaire d'arrivée
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArrivalDate) @Html.DisplayFor(model => model.ArrivalTime)
+        </dd>
+        <dt class="col-sm-2">
+            Date et horaire de départ
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DepartureDate) @Html.DisplayFor(model => model.DepartureTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NbPerson)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NbPerson)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalPrice) €
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<BookingApp.Models.Booking>
+
+@{
+    ViewData["Title"] = "CRUD Réservation";
+}
+
+<div class="card" style="margin-top:1em;">
+    <div class="card-body table-responsive">
+
+        <div class="card-header">
+            <div class="row align-items-center">
+
+                <div class="col">
+                    <h2>Réservation</h2>
+                </div>
+
+                <div class="col-auto">
+                    <input id="searchInput" class="form-control" type="text" placeholder="Rechercher">
+                </div>
+
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Offer)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.User)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookingDateTime)
+                    </th>
+                    <th>
+                        Date et horaire d'arrivée
+                    </th>
+                    <th>
+                        Date et horaire de départ 
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NbPerson)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TotalPrice)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="resultTable">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Offer.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookingDateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ArrivalDate) @Html.DisplayFor(modelItem => item.ArrivalTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DepartureDate) @Html.DisplayFor(modelItem => item.DepartureTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NbPerson)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalPrice) €
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
