@@ -12,3 +12,12 @@ $(document).ready(function () {
 		});
 	});
 });	
+
+
+$(document).ready(function () {
+	$("#uploadPictures").on("change", function () {
+		$("#uploadPicturesForm").submit();
+	});
+
+	$("#uploadPicturesBtn").hide();
+});
