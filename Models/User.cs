@@ -11,15 +11,18 @@ namespace BookingApp.Models
     public class User : IdentityUser
     {
         [PersonalData]
+        [Display(Name = "Prénom")]
         public String FirstName { get; set; }
 
         [PersonalData]
+        [Display(Name = "Nom")]
         public String LastName { get; set; }
 
         [PersonalData]
+        [Display(Name = "Solde")]
         public Double Balance { get; set; }
 
-        [Display(Name = "Logement")]
+        [Display(Name = "Logement(s)")]
         public virtual List<Accommodation> Accommodations { get; set; }
     }
 }

@@ -1,11 +1,11 @@
-﻿using BookingApp.Models;
+﻿using BookingApp.Data;
+using BookingApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,10 +15,12 @@ namespace BookingApp.Controllers
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
+        private readonly AppContextDB _context;
         private readonly UserManager<User> _userManager;
 
-        public UserController(UserManager<User> userManager)
+        public UserController(AppContextDB context,  UserManager<User> userManager)
         {
+            _context = context;
             _userManager = userManager;
         }
 
@@ -52,9 +54,24 @@ namespace BookingApp.Controllers
         }
 
         // GET: UserController/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users
+                .Include(u => u.Accommodations)
+                .ThenInclude(a => a.Address)
+                .SingleOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{id}'");
+            }
+
+            return View(user);
         }
 
         // GET: UserController/Edit/5
@@ -66,6 +83,7 @@ namespace BookingApp.Controllers
             }
 
             var user = await _userManager.FindByIdAsync(id);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{id}'");
@@ -103,16 +121,21 @@ namespace BookingApp.Controllers
 
                 string actualRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
-
                 if (actualRole == null)
                 {
-                    IdentityResult addingResult = await _userManager.AddToRoleAsync(user, Input.Role);
+                    // Set user role
+                    await _userManager.AddToRoleAsync(user, Input.Role);
                 }
                 else if (!actualRole.Equals(Input.Role))
                 {
-                    IdentityResult deletionResult = await _userManager.RemoveFromRoleAsync(user, actualRole);
-                    IdentityResult addingResult = await _userManager.AddToRoleAsync(user, Input.Role);
+                    // User has already a role, so first delete the actual role
+                    await _userManager.RemoveFromRoleAsync(user, actualRole);
+
+                    // Then, set the new role
+                    await _userManager.AddToRoleAsync(user, Input.Role);
                 }
+
+                await _userManager.UpdateAsync(user);
             }
 
             return RedirectToAction(nameof(Index));
@@ -127,6 +150,7 @@ namespace BookingApp.Controllers
             }
 
             var user = await _userManager.FindByIdAsync(id);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{id}'");
