@@ -15,15 +15,11 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public IndexModel(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager)
+        public IndexModel(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
-        public string Username { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -33,20 +29,28 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Display(Name = "Prénom")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Nom")]
+            public string LastName { get; set; }
+
             [Phone]
             [Display(Name = "N° de téléphone")]
             public string PhoneNumber { get; set; }
+
         }
 
-        private async Task LoadAsync(User user)
+        private void Load(User user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            var firstName = user.FirstName;
+            var lastName = user.LastName;
+            var phoneNumber = user.PhoneNumber;
 
             Input = new InputModel
             {
+                LastName = lastName,
+                FirstName = firstName,
                 PhoneNumber = phoneNumber
             };
         }
@@ -54,18 +58,20 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            await LoadAsync(user);
+            Load(user);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -73,23 +79,20 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
+                Load(user);
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
-            }
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.PhoneNumber = Input.PhoneNumber;
 
+            // Update user in database
+            await _userManager.UpdateAsync(user);
+
+            // Update signin user informations
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Votre profil a été mis a jour";
             return RedirectToPage();
         }
     }
