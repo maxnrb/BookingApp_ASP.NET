@@ -1,26 +1,28 @@
-﻿using BookingApp.Models;
+﻿using BookingApp.Data;
+using BookingApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookingApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly AppContextDB _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AppContextDB context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var appContextDB = _context.Offers
+                .Include(o => o.Accommodation)
+                .Include(o => o.Accommodation.Address)
+                .Include(o => o.Accommodation.User);
+            return View(await appContextDB.ToListAsync());
         }
 
         public IActionResult Privacy()
