@@ -9,6 +9,9 @@ using BookingApp.Data;
 using BookingApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BookingApp.Controllers
 {
@@ -17,11 +20,13 @@ namespace BookingApp.Controllers
     {
         private readonly AppContextDB _context;
         private readonly UserManager<User> _userManager;
+        private readonly IWebHostEnvironment _environment;
 
-        public AccommodationController(AppContextDB context, UserManager<User> userManager)
+        public AccommodationController(AppContextDB context, UserManager<User> userManager, IWebHostEnvironment environment)
         {
             _context = context;
             _userManager = userManager;
+            _environment = environment;
         }
 
         // GET: Accommodation
@@ -42,6 +47,7 @@ namespace BookingApp.Controllers
                 .Include(a => a.Offers)
                 .Include(a => a.Address)
                 .Include(a => a.User)
+                .Include(a => a.Pictures)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (accommodation == null) {
@@ -67,12 +73,13 @@ namespace BookingApp.Controllers
             [Bind("StreetAndNumber, Complement, City, PostalCode, Country")] Address address,
             [Bind("ArrivalHour, DepartureHour, PetAllowed, PartyAllowed, SmokeAllowed")] HouseRules houseRules)
         {
-            accommodation.Address = address;
-            accommodation.HouseRules = houseRules;
-            accommodation.UserId = (await _userManager.GetUserAsync(User)).Id;
 
             if (ModelState.IsValid)
             {
+                accommodation.UserId = (await _userManager.GetUserAsync(User)).Id;
+                accommodation.Address = address;
+                accommodation.HouseRules = houseRules;
+                
                 _context.Add(accommodation);
                 await _context.SaveChangesAsync();
 
@@ -117,13 +124,13 @@ namespace BookingApp.Controllers
                 return NotFound();
             }
 
-            // Get accommodation's user
-            accommodation.UserId = await _context.Accommodations.Where(a => a.Id == id).Select(a => a.UserId).SingleOrDefaultAsync();
-            accommodation.Address = address;
-            accommodation.HouseRules = houseRules;
-
             if (ModelState.IsValid)
             {
+                // Get accommodation's user
+                accommodation.UserId = await _context.Accommodations.Where(a => a.Id == id).Select(a => a.UserId).SingleOrDefaultAsync();
+                accommodation.Address = address;
+                accommodation.HouseRules = houseRules;
+
                 try
                 {
                     _context.Update(accommodation);
@@ -177,6 +184,76 @@ namespace BookingApp.Controllers
         private bool AccommodationExists(Guid id)
         {
             return _context.Accommodations.Any(e => e.Id == id);
+        }
+
+
+        // GET: Accommodation/ManagePictures/5
+        public async Task<IActionResult> ManagePictures(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var accommodation = await _context.Accommodations
+                .Include(a => a.Pictures)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (accommodation == null)
+            {
+                return NotFound();
+            }
+
+            return View(accommodation);
+        }
+
+        // POST: Accommodation/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ManagePictures(Guid? id, List<IFormFile> files)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    string fileName = DateTime.Now.ToString("ddMMyyyyHHmmssfff") + "_" + Guid.NewGuid().ToString("N") 
+                        + Path.GetExtension(formFile.FileName);
+
+                    string filePath = Path.Combine(_environment.WebRootPath, "upload", fileName);
+
+                    using var stream = System.IO.File.Create(filePath);
+                    await formFile.CopyToAsync(stream);
+
+                    await _context.Pictures.AddAsync(new Picture((Guid)id, fileName));
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            return RedirectToAction("ManagePictures", new { id });
+        }
+
+        // GET: Accommodation/DeletePicture/5
+        public async Task<IActionResult> DeletePicture(Guid id, Guid accommodationId)
+        {
+            // TODO: Check if user own the picture
+            var picture = await _context.Pictures.FindAsync(id);
+
+            string filePath = Path.Combine(_environment.WebRootPath, "upload", picture.FileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            _context.Pictures.Remove(picture);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ManagePictures", new { id = accommodationId });
         }
     }
 }

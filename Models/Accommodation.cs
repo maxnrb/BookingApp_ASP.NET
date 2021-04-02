@@ -25,7 +25,11 @@ namespace BookingApp.Models
 		[Display(Name = "Règlement Intérieur")]
 		public virtual HouseRules HouseRules { get; set; }
 
-		//private List<Picture> pictures;
+		[Display(Name = "Photo(s)")]
+		public virtual List<Picture> Pictures { get; set; }
+
+		[Display(Name = "Pièce(s)")]
+		public virtual List<Picture> Rooms { get; set; }
 
 		[Required(ErrorMessage = "Vous devez entrer un nom pour votre logement")]
 		[Display(Name = "Nom")]

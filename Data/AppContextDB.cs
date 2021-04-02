@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BookingApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace BookingApp.Data
 {
@@ -18,5 +13,11 @@ namespace BookingApp.Data
         public DbSet<Offer> Offers { get; set; }
 
         public DbSet<Address> Address { get; set; }
+
+        public DbSet<Booking> Booking { get; set; }
+
+        public DbSet<Picture> Pictures { get; set; }
+
+        public DbSet<Room> Rooms { get; set; }
     }
 }
