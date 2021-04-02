@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +6,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookingApp.Data;
 using BookingApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookingApp.Controllers
 {
+    [Authorize]
     public class OfferController : Controller
     {
         private readonly AppContextDB _context;
@@ -57,7 +58,8 @@ namespace BookingApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AccommodationId,AddingDate,StartAvailability,EndAvailability,PricePerNight,CleaningFee")] Offer offer)
+        public async Task<IActionResult> Create(
+            [Bind("AccommodationId, StartAvailability, EndAvailability, PricePerNight, CleaningFee")] Offer offer)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +93,8 @@ namespace BookingApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,AccommodationId,AddingDate,StartAvailability,EndAvailability,PricePerNight,CleaningFee")] Offer offer)
+        public async Task<IActionResult> Edit(Guid id, 
+            [Bind("Id, AccommodationId, StartAvailability, EndAvailability, PricePerNight, CleaningFee")] Offer offer)
         {
             if (id != offer.Id)
             {
@@ -100,6 +103,9 @@ namespace BookingApp.Controllers
 
             if (ModelState.IsValid)
             {
+                // Get offer's adding date
+                offer.AddingDateTime = await _context.Offers.Where(o => o.Id == id).Select(o => o.AddingDateTime).SingleOrDefaultAsync();
+
                 try
                 {
                     _context.Update(offer);
@@ -158,6 +164,7 @@ namespace BookingApp.Controllers
         }
 
         // GET: Offer/View/5
+        [AllowAnonymous]
         public async Task<IActionResult> View(Guid? id)
         {
             if (id == null)
@@ -168,6 +175,8 @@ namespace BookingApp.Controllers
             var offer = await _context.Offers
                 .Include(o => o.Accommodation)
                 .Include(o => o.Accommodation.Address)
+                .Include(o => o.Accommodation.HouseRules)
+                .Include(o => o.Accommodation.Pictures)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (offer == null)

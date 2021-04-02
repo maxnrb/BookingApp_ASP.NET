@@ -28,7 +28,7 @@
                         @Html.DisplayNameFor(model => model.Accommodation)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.AddingDate)
+                        @Html.DisplayNameFor(model => model.AddingDateTime)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.StartAvailability)
@@ -46,7 +46,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody id="resultTable">
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -54,7 +54,7 @@
                             @Html.DisplayFor(modelItem => item.Accommodation.Id)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.AddingDate)
+                            @Html.DisplayFor(modelItem => item.AddingDateTime)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.StartAvailability)

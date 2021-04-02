@@ -1,7 +1,7 @@
 ﻿@model BookingApp.Models.Offer
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edition Offre";
 }
 
 <h1>Edit</h1>
@@ -13,36 +13,37 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
                 <label asp-for="AccommodationId" class="control-label"></label>
                 <select asp-for="AccommodationId" class="form-control" asp-items="ViewBag.AccommodationId"></select>
                 <span asp-validation-for="AccommodationId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AddingDate" class="control-label"></label>
-                <input asp-for="AddingDate" class="form-control" />
-                <span asp-validation-for="AddingDate" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="StartAvailability" class="control-label"></label>
                 <input asp-for="StartAvailability" class="form-control" />
                 <span asp-validation-for="StartAvailability" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="EndAvailability" class="control-label"></label>
                 <input asp-for="EndAvailability" class="form-control" />
                 <span asp-validation-for="EndAvailability" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="PricePerNight" class="control-label"></label>
                 <input asp-for="PricePerNight" class="form-control" />
                 <span asp-validation-for="PricePerNight" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="CleaningFee" class="control-label"></label>
                 <input asp-for="CleaningFee" class="form-control" />
                 <span asp-validation-for="CleaningFee" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

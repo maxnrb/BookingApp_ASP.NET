@@ -90,24 +90,23 @@
                         <div class="p-1">
                             <img src="~/svg/clock.svg" alt="Clock icon" height="20px" width="20px" style="vertical-align: -4px; margin-right:3px;" />
                             <h6 style="display:inline;">
-                                Heure d'arrivée : Après xx:xx -
-                                Heure de départ : Avant xx:xx
+                                Heure d'arrivée : Après @Model.Accommodation.HouseRules.ArrivalHour - Heure de départ : Avant @Model.Accommodation.HouseRules.DepartureHour
                             </h6>
                         </div>
 
                         <div class="p-1">
                             <img src="~/svg/pet.svg" alt="Pet icon" height="20px" width="20px" style="vertical-align: -4px; margin-right:3px;" />
-                            <h6 style="display:inline;">Animaux autorisés : Oui/Non</h6>
+                            <h6 style="display:inline;">Animaux autorisés : @Model.Accommodation.HouseRules.PetAllowed</h6>
                         </div>
 
                         <div class="p-1">
                             <img src="~/svg/party.svg" alt="Party icon" height="20px" width="20px" style="vertical-align: -4px; margin-right:3px;" />
-                            <h6 style="display:inline;">Fêtes autorisées : Oui/Non</h6>
+                            <h6 style="display:inline;">Fêtes autorisées : @Model.Accommodation.HouseRules.PartyAllowed</h6>
                         </div>
 
                         <div class="p-1">
                             <img src="~/svg/smoke.svg" alt="Smoke icon" height="20px" width="20px" style="vertical-align: -4px; margin-right:3px;" />
-                            <h6 style="display:inline;">Logement fumeur : Oui/Non</h6>
+                            <h6 style="display:inline;">Logement fumeur : @Model.Accommodation.HouseRules.SmokeAllowed</h6>
                         </div>
                     </div>
 
@@ -136,18 +135,19 @@
 
                             <p class="card-text">Sélectionnez vos dates de réservations :</p>
 
-                            <form action="" method="post">
+                            <form asp-controller="Booking" asp-action="Create">
+                                <input type="hidden" asp-for="Id" name="OfferId"/>
+
                                 <div class="row g-3" style="margin-bottom: 0.5em;">
                                     <div class="col col-md-7">
                                         <label for="inputArrivalDate">Arrivé</label>
-                                        <input type="date" class="form-control" id="inputArrivalDate" name="arrivalDate"
-                                               min=""
-                                               max="" required>
+                                        <input type="date" class="form-control" id="inputArrivalDate" name="ArrivalDate"
+                                               min="" max="" required>
                                     </div>
 
                                     <div class="col col-md-5">
                                         <label for="inputArrivalTime">Heure</label>
-                                        <input type="time" class="form-control" id="inputArrivalTime" name="arrivalTime"
+                                        <input type="time" class="form-control" id="inputArrivalTime" name="ArrivalTime"
                                                min="" max="23:59" required>
                                     </div>
                                 </div>
@@ -155,26 +155,24 @@
                                 <div class="row g-3" style="margin-bottom: 0.5em;">
                                     <div class="col col-md-7">
                                         <label for="inputDepartureDate">Départ</label>
-                                        <input type="date" class="form-control" id="inputDepartureDate" name="departureDate"
-                                               min=""
-                                               max="" required>
+                                        <input type="date" class="form-control" id="inputDepartureDate" name="DepartureDate"
+                                               min="" max="" required>
                                     </div>
 
                                     <div class="col col-md-5">
                                         <label for="inputDepartureTime">Heure</label>
-                                        <input type="time" class="form-control" id="inputDepartureTime" name="departureTime"
-                                               min="00:00"
-                                               max="" required>
+                                        <input type="time" class="form-control" id="inputDepartureTime" name="DepartureTime"
+                                               min="00:00" max="" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="nbPersonSelector">Nombre de voyageur(s)</label>
-                                    <select class="form-control" id="nbPersonSelector" name="nbPerson" required>
+                                    <select class="form-control" id="nbPersonSelector" name="NbPerson" required>
                                         @for (int i = 1; i <= 5; i++)
                                         {
                                             <option>@i</option>
-}
+                                        }
                                     </select>
                                 </div>
 

@@ -16,8 +16,8 @@ namespace BookingApp.Models
 		public virtual Accommodation Accommodation { get; set; }
 
 		[Display(Name = "Date d'ajout")]
-		[DataType(DataType.Date)]
-		public DateTime AddingDate { get; set; }
+		[DataType(DataType.DateTime)]
+		public DateTime AddingDateTime { get; set; }
 
 		[Display(Name = "Début disponibilité")]
 		[DataType(DataType.Date)]
@@ -32,5 +32,10 @@ namespace BookingApp.Models
 
 		[Display(Name = "Frais de ménage")]
 		public double CleaningFee { get; set; }
+
+		public Offer()
+        {
+			this.AddingDateTime = DateTime.Now;
+        }
 	}
 }
