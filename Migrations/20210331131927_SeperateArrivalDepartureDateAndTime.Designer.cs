@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingApp.Migrations
 {
     [DbContext(typeof(AppContextDB))]
-    [Migration("20210330223115_AddHouseRules")]
-    partial class AddHouseRules
+    [Migration("20210331131927_SeperateArrivalDepartureDateAndTime")]
+    partial class SeperateArrivalDepartureDateAndTime
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,6 +78,48 @@ namespace BookingApp.Migrations
                     b.ToTable("Address");
                 });
 
+            modelBuilder.Entity("BookingApp.Models.Booking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ArrivalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("ArrivalTime")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("BookingDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DepartureDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("DepartureTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("NbPerson")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("OfferId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OfferId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Booking");
+                });
+
             modelBuilder.Entity("BookingApp.Models.HouseRules", b =>
                 {
                     b.Property<Guid>("Id")
@@ -112,7 +154,7 @@ namespace BookingApp.Migrations
                     b.Property<Guid>("AccommodationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("AddingDate")
+                    b.Property<DateTime>("AddingDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<double>("CleaningFee")
@@ -361,6 +403,23 @@ namespace BookingApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Accommodation");
+                });
+
+            modelBuilder.Entity("BookingApp.Models.Booking", b =>
+                {
+                    b.HasOne("BookingApp.Models.Offer", "Offer")
+                        .WithMany()
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookingApp.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Offer");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BookingApp.Models.HouseRules", b =>

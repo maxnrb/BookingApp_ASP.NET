@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookingApp.Migrations
 {
-    public partial class InitDB : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -199,12 +199,34 @@ namespace BookingApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HouseRules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ArrivalHour = table.Column<TimeSpan>(type: "time", nullable: false),
+                    DepartureHour = table.Column<TimeSpan>(type: "time", nullable: false),
+                    PetAllowed = table.Column<bool>(type: "bit", nullable: false),
+                    PartyAllowed = table.Column<bool>(type: "bit", nullable: false),
+                    SmokeAllowed = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HouseRules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HouseRules_Accommodations_Id",
+                        column: x => x.Id,
+                        principalTable: "Accommodations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Offers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AccommodationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AddingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AddingDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StartAvailability = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndAvailability = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PricePerNight = table.Column<double>(type: "float", nullable: false),
@@ -217,6 +239,36 @@ namespace BookingApp.Migrations
                         name: "FK_Offers_Accommodations_AccommodationId",
                         column: x => x.AccommodationId,
                         principalTable: "Accommodations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Booking",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OfferId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BookingDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArrivalDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DepartureDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NbPerson = table.Column<int>(type: "int", nullable: false),
+                    TotalPrice = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Booking", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Booking_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Booking_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -266,6 +318,16 @@ namespace BookingApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Booking_OfferId",
+                table: "Booking",
+                column: "OfferId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Booking_UserId",
+                table: "Booking",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offers_AccommodationId",
                 table: "Offers",
                 column: "AccommodationId");
@@ -292,10 +354,16 @@ namespace BookingApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Offers");
+                name: "Booking");
+
+            migrationBuilder.DropTable(
+                name: "HouseRules");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Offers");
 
             migrationBuilder.DropTable(
                 name: "Accommodations");

@@ -3,37 +3,39 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookingApp.Migrations
 {
-    public partial class AddHouseRules : Migration
+    public partial class AddRoom : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "HouseRules",
+                name: "Rooms",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ArrivalHour = table.Column<TimeSpan>(type: "time", nullable: false),
-                    DepartureHour = table.Column<TimeSpan>(type: "time", nullable: false),
-                    PetAllowed = table.Column<bool>(type: "bit", nullable: false),
-                    PartyAllowed = table.Column<bool>(type: "bit", nullable: false),
-                    SmokeAllowed = table.Column<bool>(type: "bit", nullable: false)
+                    AccommodationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoomType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HouseRules", x => x.Id);
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HouseRules_Accommodations_Id",
-                        column: x => x.Id,
+                        name: "FK_Rooms_Accommodations_AccommodationId",
+                        column: x => x.AccommodationId,
                         principalTable: "Accommodations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rooms_AccommodationId",
+                table: "Rooms",
+                column: "AccommodationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HouseRules");
+                name: "Rooms");
         }
     }
 }
