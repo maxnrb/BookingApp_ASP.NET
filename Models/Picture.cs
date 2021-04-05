@@ -7,7 +7,6 @@ namespace BookingApp.Models
         public Guid Id { get; set; }
 
         public Guid AccommodationId { get; set; }
-        public virtual Accommodation Accommodation { get; set; }
 
         public String FileName { get; set; }
 
