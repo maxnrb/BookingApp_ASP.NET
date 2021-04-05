@@ -29,7 +29,7 @@ namespace BookingApp.Models
 		public virtual List<Picture> Pictures { get; set; }
 
 		[Display(Name = "Pièce(s)")]
-		public virtual List<Picture> Rooms { get; set; }
+		public virtual List<Room> Rooms { get; set; }
 
 		[Required(ErrorMessage = "Vous devez entrer un nom pour votre logement")]
 		[Display(Name = "Nom")]

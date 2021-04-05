@@ -1,0 +1,182 @@
+﻿@model BookingApp.Models.Accommodation
+
+@{
+    ViewData["Title"] = "Gestion Pièces Logement";
+}
+
+<script>
+    var rooms = ["Bedroom", "Bathroom", "Kitchen"]
+
+    // Show appropriate amenities for selected room type
+    function showOnly(id) {
+        var state = document.getElementById(id).style.display;
+
+        if (state == 'none') {
+            for (i = 0; i < rooms.length; i++) {
+                if (rooms[i] !== id) {
+                    document.getElementById(rooms[i]).style.display = 'none';
+                }
+            }
+            document.getElementById(id).style.display = '';
+        }
+    }
+</script>
+
+<div style="padding-top: 0.5em">
+    <partial name="_StatusMessage" />
+</div>
+
+<div class="card text-center main-card-0_5">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Accommodation" asp-action="Edit" asp-route-id="@Model.Id">Informations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Accommodation" asp-action="ManagePictures" asp-route-id="@Model.Id">
+                    Photos
+                    @if (Model.Pictures.Count == 0)
+                    {
+                        <span class="badge rounded-pill bg-danger" title="Vous devez ajouter au moins 1 photo !">!</span>
+                    }
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true" href="#">
+                    Pièces
+                    @if (Model.Rooms.Count == 0)
+                    {
+                        <span class="badge rounded-pill bg-danger" title="Vous devez ajouter au moins 1 pièce !">!</span>
+                    }
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body text-start">
+
+        <div class="row justify-content-start">
+            <div class="col-md-4">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Ajouter une pièce :</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <form asp-action="ManageRooms">
+                            <input type="hidden" name="AccommodationId" value="@Model.Id" />
+
+                            <label for="roomTypeSelector">Type :</label>
+                            <select class="form-select" name="RoomType" onchange="showOnly(value);" id="roomTypeSelector" required>
+                                @foreach (var suit in Enum.GetValues(typeof(RoomTypes)))
+                                {
+                                    <option value="@suit.ToString()">@TypeTranslate.ToFr(suit.ToString())</option>
+                                }
+                            </select>
+
+                            <h5 style="margin-top: 1em;">Equipements</h5>
+
+                            <div id="Bedroom">
+                                <div class="row g-3">
+                                    <div class="col col-md-6">
+                                        <label class="sr-only" for="inputSingleBedNumber">Couchage 1 place :</label>
+                                        <input type="number" class="form-control" id="inputSingleBedNumber" name="singleBedNumber" min="0" step="1" value=0>
+                                    </div>
+
+                                    <div class="col col-md-6">
+                                        <label class="sr-only" for="inputDoubleBedNumber">Couchage 2 places :</label>
+                                        <input type="number" class="form-control" id="inputDoubleBedNumber" name="doubleBedNumber" min="0" step="1" value=0>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 0.5em;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="tvCheckbox" name="tv">
+                                        <label class="form-check-label" for="tvCheckbox">Télévision</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="closetCheckbox" name="closet">
+                                        <label class="form-check-label" for="closetCheckbox">Penderie</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="Bathroom" style="display:none;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="bathtubCheckbox" name="bathtub">
+                                    <label class="form-check-label" for="bathtubCheckbox">Baignoire</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="showerCheckbox" name="shower">
+                                    <label class="form-check-label" for="showerCheckbox">Douche</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="washingMachineCheckbox" name="washingMachine">
+                                    <label class="form-check-label" for="washingMachineCheckbox">Machine à laver</label>
+                                </div>
+                            </div>
+
+                            <div id="Kitchen" style="display:none;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="ovenCheckbox" name="oven">
+                                    <label class="form-check-label" for="ovenCheckbox">Four</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="freezerCheckbox" name="freezer">
+                                    <label class="form-check-label" for="freezerCheckbox">Congélateur</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="coffeeMakerCheckbox" name="coffeeMaker">
+                                    <label class="form-check-label" for="coffeeMakerCheckbox">Cafetière</label>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2" style="margin-top: 1em;">
+                                <button class="btn btn-success" type="submit">Ajouter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <h4>Pièce(s) ajoutée(s) [@Model.Rooms.Count] :</h4>
+
+                @foreach (var item in Model.Rooms)
+                {
+                    <div class="card" style="margin-bottom:1em;">
+                        <div class="card-body">
+
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    @{ string iconSrc = item.RoomType.ToString().ToLower() + ".svg"; }
+
+                                    <h5 class="card-title">
+                                        <img src="~/svg/@iconSrc" alt="Room icon" height="20px" width="20px" style="vertical-align: -3px;" />
+                                        @TypeTranslate.ToFr(Enum.GetName(typeof(RoomTypes), item.RoomType))
+                                    </h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <form asp-action="DeleteRoom" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                        <input type="hidden" name="accommodationId" value="@Model.Id" />
+
+                                        <button type="submit" class="btn-close" aria-label="Close"></button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <p class="card-text">
+                                <b>Équipements: </b>
+                                @item.AmenitiesStr()
+                            </p>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
