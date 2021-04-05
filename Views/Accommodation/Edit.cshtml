@@ -4,16 +4,38 @@
     ViewData["Title"] = "Edition Logement";
 }
 
-<div class="card" style="margin:2em;">
-
+<div class="card text-center main-card">
     <div class="card-header">
-        <h4>Modification d'un logement</h4>
+        <ul class="nav nav-tabs card-header-tabs nav-fill">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true" href="#">Informations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Accommodation" asp-action="ManagePictures" asp-route-id="@Model.Id">
+                    Photos
+                    @if (Model.Pictures != null && Model.Pictures.Count == 0)
+                    {
+                        <span class="badge rounded-pill bg-danger" title="Vous devez ajouter au moins 1 photo !">!</span>
+                    }
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Accommodation" asp-action="ManageRooms" asp-route-id="@Model.Id">
+                    Pièces
+                    @if (Model.Rooms != null && Model.Rooms.Count == 0)
+                    {
+                        <span class="badge rounded-pill bg-danger" title="Vous devez ajouter au moins 1 pièce !">!</span>
+                    }
+                </a>
+            </li>
+        </ul>
     </div>
 
-    <div class="card-body" style="padding:1em">
-        <h5>Informations générales :</h5>
+    <form asp-action="Edit">
+        <div class="card-body text-start">
 
-        <form asp-action="Edit">
+            <h5>Informations générales :</h5>
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" asp-for="Id" />
@@ -29,7 +51,7 @@
 
                 <div class="col-md-4">
                     <label asp-for="Type" class="control-label"></label>
-                    <select asp-for="Type" class="form-control">
+                    <select asp-for="Type" class="form-control form-select">
                         <option value="Appartement">Appartement</option>
                         <option value="Maison">Maison</option>
                         <option value="Chambre dans un appartement">Chambre dans un appartement</option>
@@ -112,15 +134,18 @@
                 <label asp-for="HouseRules.SmokeAllowed" class="form-check-label"></label>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Sauvegarder" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-outline-secondary">Retour au CRUD</a>
+        </div>
+    </form>
+    <div>
+        
+    </div>
+
 </div>
 
 @section Scripts {

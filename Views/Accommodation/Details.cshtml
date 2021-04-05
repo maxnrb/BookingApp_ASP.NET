@@ -71,6 +71,37 @@
         </dd>
 
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Rooms)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Rooms.Count != 0)
+            {
+                foreach (var item in Model.Rooms)
+                {
+                    <div class="card" style="margin-bottom:1em;">
+                        <div class="card-body">
+                            @{ string iconSrc = item.RoomType.ToString().ToLower() + ".svg"; }
+
+                            <h5 class="card-title">
+                                <img src="~/svg/@iconSrc" alt="Room icon" height="20px" width="20px" style="vertical-align: -3px;" />
+                                @TypeTranslate.ToFr(Enum.GetName(typeof(RoomTypes), item.RoomType))
+                            </h5>
+
+                            <p class="card-text">
+                                <b>Équipements: </b>
+                                @item.AmenitiesStr()
+                            </p>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Aucune pièce ajoutée</p>
+            }
+        </dd>
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Offers)
         </dt>
 

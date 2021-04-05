@@ -1,5 +1,11 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* Set main card top padding */
+.main-card {
+    margin-top: 1em;
+}
+
+.main-card-0_5 {
+    margin-top: 0.5em;
+}
 
 a.navbar-brand {
   white-space: normal;

@@ -177,6 +177,8 @@ namespace BookingApp.Controllers
                 .Include(o => o.Accommodation.Address)
                 .Include(o => o.Accommodation.HouseRules)
                 .Include(o => o.Accommodation.Pictures)
+                .Include(o => o.Accommodation.Rooms)
+                .ThenInclude(r => r.Amenities)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (offer == null)

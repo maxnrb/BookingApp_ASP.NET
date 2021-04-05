@@ -11,14 +11,13 @@
     }
 
     main.pb-3 {
-        padding-bottom: 0em!important;
+        padding-bottom: 0em !important;
     }
 </style>
 
-<div class="container-fluid px-1 px-sm-4 mx-auto" 
+<div class="container-fluid px-1 px-sm-4 mx-auto"
      @{String background_url = "/image/background" + new Random().Next(1, 9) + ".jpg";}
-
-     style="background-image: url('@background_url'); 
+     style="background-image: url('@background_url');
      background-size: cover; background-position: center; width: 100%; height: auto; padding-top: 12em; padding-bottom: 10em; padding-left: 2em; padding-right:2em;">
 
     <div class="row d-flex justify-content-center">
@@ -69,76 +68,81 @@
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="margin-top: 1em;">
 
-            @foreach (var item in Model)
-            {
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            @{ int offerNb = 0;
+
+                foreach (var item in Model)
+                {
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <div id="carousel-offer-@offerNb" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    @for (int i = 0; i < item.Accommodation.Pictures.Count; i++)
+                                    {
+                                        <button type="button" data-bs-target="#carousel-offer-@offerNb" data-bs-slide-to="@i"
+                                                @if (i == 0) { @: class="active" aria-current="true"
+                                                } aria-label="Slide @i"></button>
+                                    }
+                                </div>
+
+                                <div class="carousel-inner">
+                                    @{ var firstImg = true;
+                                        foreach (Picture picture in item.Accommodation.Pictures)
+                                        {
+                                            <div class="carousel-item @if (firstImg) {
+                                            @:active
+                                            firstImg = false; }">
+                                                <img src="~/upload/@picture.FileName" class="d-block w-100 card-img-top" style="object-fit: cover; width: 100%; height: 15em;" alt="">
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-offer-@offerNb" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-offer-@offerNb" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
 
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://www.maisons-arteco.fr/wp-content/uploads/2019/10/Defrance_Web-1-1920x1080.jpg"
-                                         class="d-block w-100 card-img-top" style="object-fit: cover; width: 100%; height: 15em;" alt="">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://www.illico-travaux.com/wp-content/uploads/2018/04/amenagement-interieur-04042018-1151-e1522835690753.jpg"
-                                         class="d-block w-100 card-img-top" style="object-fit: cover; width: 100%; height: 15em;" alt="">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://www.planete-deco.fr/wp-content/uploads/2020/01/WA3.jpg"
-                                         class="d-block w-100 card-img-top" style="object-fit: cover; width: 100%; height: 15em;" alt="">
-                                </div>
-                            </div>
-
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-
-                        <div class="card-body">
-                            <a asp-controller="Offer" asp-action="View" asp-route-id="@item.Id.ToString()" style="color: black; text-decoration: none;">
-                                <h4 class="mb-1">@item.Accommodation.Address.ShortAddress()</h4>
-                            </a>
-
-                            <p class="card-text">
-                                Déposée par
-                                <a href="" style="color: black; text-decoration: none; font-weight: bold;">
-                                    @Html.DisplayFor(modelItem => item.Accommodation.User.FirstName) @Html.DisplayFor(modelItem => item.Accommodation.User.LastName)
+                            <div class="card-body">
+                                <a asp-controller="Offer" asp-action="View" asp-route-id="@item.Id.ToString()" style="color: black; text-decoration: none;">
+                                    <h4 class="mb-1">@item.Accommodation.Address.ShortAddress()</h4>
                                 </a>
-                            </p>
 
-                            <p>Disponible du @Html.DisplayFor(modelItem => item.StartAvailability) au @Html.DisplayFor(modelItem => item.EndAvailability)</p>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a asp-controller="Offer" asp-action="View" asp-route-id="@item.Id.ToString()" class="btn btn-sm btn-outline-secondary">
-                                        Voir l'offre
+                                <p class="card-text">
+                                    Déposée par
+                                    <a href="" style="color: black; text-decoration: none; font-weight: bold;">
+                                        @Html.DisplayFor(modelItem => item.Accommodation.User.FirstName) @Html.DisplayFor(modelItem => item.Accommodation.User.LastName)
                                     </a>
-                                </div>
+                                </p>
 
-                                <div class="btn-group">
-                                    <a href="" class="btn btn-sm btn-outline-secondary">
-                                        Profil de l'hôte
-                                    </a>
-                                </div>
+                                <p>Disponible du @Html.DisplayFor(modelItem => item.StartAvailability) au @Html.DisplayFor(modelItem => item.EndAvailability)</p>
 
-                                <small class="text-success" style="font-weight: bold;">@Html.DisplayFor(modelItem => item.PricePerNight) €/Nuit</small>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a asp-controller="Offer" asp-action="View" asp-route-id="@item.Id.ToString()" class="btn btn-sm btn-outline-secondary">
+                                            Voir l'offre
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <a href="" class="btn btn-sm btn-outline-secondary">
+                                            Profil de l'hôte
+                                        </a>
+                                    </div>
+
+                                    <small class="text-success" style="font-weight: bold;">@Html.DisplayFor(modelItem => item.PricePerNight) €/Nuit</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
 
+                    offerNb++;
+                }
+            }
         </div>
     </div>
 </div>
