@@ -46,6 +46,6 @@ Already installed via ` Tools > NuGet Package Manager > Package Manager Console 
 - Identity UI for login/register interfaces: ` Microsoft.AspNetCore.Identity.UI `
 
 ## Author
-- [Amot98](https://github.com/Amot98)
 - [MaximeNrb](https://github.com/maximenrb)
+- [Amot98](https://github.com/Amot98)
 - [Lekolix](https://github.com/Lekolix)
