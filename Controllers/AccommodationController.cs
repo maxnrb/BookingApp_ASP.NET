@@ -71,7 +71,7 @@ namespace BookingApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("Name, Type, Description")] Accommodation accommodation,
+            [Bind("Name, Type, MaxTraveler, Description")] Accommodation accommodation,
             [Bind("StreetAndNumber, Complement, City, PostalCode, Country")] Address address,
             [Bind("ArrivalHour, DepartureHour, PetAllowed, PartyAllowed, SmokeAllowed")] HouseRules houseRules)
         {
@@ -119,7 +119,7 @@ namespace BookingApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, 
-            [Bind("Id, Name, Type, Description")] Accommodation accommodation,
+            [Bind("Id, Name, Type, MaxTraveler, Description")] Accommodation accommodation,
             [Bind("Id, StreetAndNumber, Complement, City, PostalCode, Country")] Address address,
             [Bind("Id, ArrivalHour, DepartureHour, PetAllowed, PartyAllowed, SmokeAllowed")] HouseRules houseRules)
         {

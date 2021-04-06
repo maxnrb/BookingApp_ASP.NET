@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace BookingApp.Models
 {
@@ -12,6 +13,7 @@ namespace BookingApp.Models
 		[ForeignKey("Accommodation")]
 		public Guid Id { get; set; }
 
+		[JsonIgnore] 
 		public virtual Accommodation Accommodation { get; set; }
 
 		[Required(ErrorMessage = "Vous devez entrer le N° et la rue de votre logement")]

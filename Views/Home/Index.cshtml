@@ -28,26 +28,26 @@
                     <small class="text-muted">Du gîte champêtre cosy à l'appartement citadin design</small>
                 </div>
 
-                <form action="" method="get">
+                <form asp-action="Search" method="get">
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <label style="margin: 0.2em;">Adresse</label>
-                            <input type="text" class="form-control" name="ville" placeholder="Où allez-vous ?" required>
+                            <label style="margin: 0.2em;">Ville</label>
+                            <input type="text" class="form-control" name="city" placeholder="Où allez-vous ?" required>
                         </div>
 
                         <div class="col-md-3">
                             <label style="margin: 0.2em;">Arrivée</label>
-                            <input type="date" class="form-control" name="startStay" min="<% out.print(sdf1.format(calendar.getTime())); %>" required>
+                            <input type="date" class="form-control" name="arrivalDate" min="" required>
                         </div>
 
                         <div class="col-md-3">
                             <label style="margin: 0.2em;">Départ</label>
-                            <input type="date" class="form-control" name="endStay" min="<% out.print(sdf1.format(calendar.getTime())); %>" required>
+                            <input type="date" class="form-control" name="departureDate" min="" required>
                         </div>
 
                         <div class="col-md-2">
                             <label style="margin: 0.2em;">Voyageurs</label>
-                            <input type="number" min="1" max="10" step="1" class="form-control" name="capacity" placeholder="1" required>
+                            <input type="number" min="1" step="1" class="form-control" name="nbPerson" placeholder="1" required>
                         </div>
 
                         <div class="col-md-1 d-grid gap-2">
@@ -68,7 +68,9 @@
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="margin-top: 1em;">
 
-            @{ int offerNb = 0;
+            @if (Model != null)
+            {
+                int offerNb = 0;
 
                 foreach (var item in Model)
                 {

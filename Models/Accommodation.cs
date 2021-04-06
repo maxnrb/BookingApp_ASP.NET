@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace BookingApp.Models
 {
     public class Accommodation
     {
-		// What is Name { get; set; }
-		// https://stackoverflow.com/questions/5096926/what-is-the-get-set-syntax-in-c
-
 		public Guid Id { get; set; }
 
 		public string UserId { get; set; }
 
 		[Display(Name = "Utilisateur")]
+		[JsonIgnore]
 		public virtual User User { get; set; }
 
 		[Display(Name = "Offres")]
+		[JsonIgnore]
 		public virtual List<Offer> Offers { get; set; }
 
 		[Display(Name = "Adresse")]
@@ -40,6 +40,10 @@ namespace BookingApp.Models
 		[RegularExpression("Appartement|Maison|Chambre dans un appartement|Chambre dans une maison", 
 			ErrorMessage = "Veuillez sélectionner un type de logement valide")]
 		public String Type { get; set; }
+
+		[Required(ErrorMessage = "Vous devez indiquer le nombre maximum de voyageurs")]
+		[Display(Name = "Maximum Voyageurs")]
+		public int MaxTraveler { get; set; }
 
 		[Required(ErrorMessage = "Vous devez entrer la description de votre logement")]
 		public String Description { get; set; }
