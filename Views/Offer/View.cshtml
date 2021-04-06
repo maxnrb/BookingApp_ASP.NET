@@ -20,12 +20,14 @@
             @{ var firstImg = true;
                 foreach (Picture picture in Model.Accommodation.Pictures)
                 {
-                    <div class="carousel-item @if (firstImg) {
+                        <div class="carousel-item @if (firstImg) {
                         @:active
                         firstImg = false; }">
 
-                        <img src="~/upload/@picture.FileName" class="d-block w-100 card-img-top" style="object-fit: cover; width: 100%; height: 450px;" alt="">
-                    </div>
+                            <a href="~/upload/@picture.FileName" target="_blank">
+                                <img src="~/upload/@picture.FileName" class="d-block w-100 card-img-top" style="object-fit: cover; width: 100%; height: 450px;" alt="">
+                            </a>
+                        </div>
                 }
             }
         </div>
@@ -90,7 +92,7 @@
                                 </p>
                             </div>
                         </div>
-                    }
+                                    }
 
                     <hr class="solid">
 
@@ -100,23 +102,23 @@
                         <div class="p-1">
                             <img src="~/svg/clock.svg" alt="Clock icon" height="20px" width="20px" style="vertical-align: -4px; margin-right:3px;" />
                             <h6 style="display:inline;">
-                                Heure d'arrivée : Après @Model.Accommodation.HouseRules.ArrivalHour - Heure de départ : Avant @Model.Accommodation.HouseRules.DepartureHour
+                                Heure d'arrivée : Après @Model.Accommodation.HouseRules.ArrivalHour.ToString("hh\\hmm") - Heure de départ : Avant @Model.Accommodation.HouseRules.DepartureHour.ToString("hh\\hmm")
                             </h6>
                         </div>
 
                         <div class="p-1">
                             <img src="~/svg/pet.svg" alt="Pet icon" height="20px" width="20px" style="vertical-align: -4px; margin-right:3px;" />
-                            <h6 style="display:inline;">Animaux autorisés : @Model.Accommodation.HouseRules.PetAllowed</h6>
+                            <h6 style="display:inline;">Animaux autorisés : @(Model.Accommodation.HouseRules.PetAllowed ? "Oui" : "Non")</h6>
                         </div>
 
                         <div class="p-1">
                             <img src="~/svg/party.svg" alt="Party icon" height="20px" width="20px" style="vertical-align: -4px; margin-right:3px;" />
-                            <h6 style="display:inline;">Fêtes autorisées : @Model.Accommodation.HouseRules.PartyAllowed</h6>
+                            <h6 style="display:inline;">Fêtes autorisées : @(Model.Accommodation.HouseRules.PartyAllowed ? "Oui" : "Non")</h6>
                         </div>
 
                         <div class="p-1">
                             <img src="~/svg/smoke.svg" alt="Smoke icon" height="20px" width="20px" style="vertical-align: -4px; margin-right:3px;" />
-                            <h6 style="display:inline;">Logement fumeur : @Model.Accommodation.HouseRules.SmokeAllowed</h6>
+                            <h6 style="display:inline;">Logement fumeur : @(Model.Accommodation.HouseRules.SmokeAllowed ? "Oui" : "Non")</h6>
                         </div>
                     </div>
 

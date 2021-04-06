@@ -32,21 +32,20 @@ namespace BookingApp.Models
 
         public string ToFr(string amenityType)
         {
-            switch(amenityType)
+            return amenityType switch
             {
-                case "SingleBed": return "Lit simple";
-                case "DoubleBed": return "Lit double";
-                case "TV": return "Télévision";
-                case "Closet": return "Penderie";
-                case "Bathtub": return "Baignoire";
-                case "Shower": return "Douche";
-                case "WashingMachine": return "Machine à laver";
-                case "Oven": return "Four";
-                case "Freezer": return "Congélateur";
-                case "CoffeeMaker": return "Machine à café";
-
-                default: return null;
-            }
+                "SingleBed" => "Lit simple",
+                "DoubleBed" => "Lit double",
+                "TV" => "Télévision",
+                "Closet" => "Penderie",
+                "Bathtub" => "Baignoire",
+                "Shower" => "Douche",
+                "WashingMachine" => "Machine à laver",
+                "Oven" => "Four",
+                "Freezer" => "Congélateur",
+                "CoffeeMaker" => "Machine à café",
+                _ => null,
+            };
         }
     }
 }

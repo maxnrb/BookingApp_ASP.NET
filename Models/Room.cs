@@ -34,15 +34,13 @@ namespace BookingApp.Models
     {
         public static string ToFr(string roomType)
         {
-            switch (roomType)
+            return roomType switch
             {
-                case "Bedroom": return "Chambre";
-                case "Bathroom": return "Salle de bain";
-                case "Kitchen": return "Cuisine";
-
-                default: return null;
-
-            }
+                "Bedroom" => "Chambre",
+                "Bathroom" => "Salle de bain",
+                "Kitchen" => "Cuisine",
+                _ => null,
+            };
         }
     }
 }
