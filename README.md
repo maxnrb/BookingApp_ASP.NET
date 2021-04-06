@@ -1,3 +1,25 @@
+## Functionality
+### Done
+- Home page:
+  - Research accommodations
+  - View last offers
+- Login & Register:
+  - External authentification (Google)
+  - 2FA authentication
+- CRUD (with research, edit and delete):
+  - Accommodation   
+  - Offer
+  - Booking (no edition and deletion)
+  - User (for Administrator) 
+- Add form:
+  - Accommodation:
+    - General informations
+    - House rules
+    - Manage pictures
+    - Manage rooms and amenities 
+  - Offer
+- Booking page with accommodation and offer informations
+
 ## Installation
 
 ## First pull from git
