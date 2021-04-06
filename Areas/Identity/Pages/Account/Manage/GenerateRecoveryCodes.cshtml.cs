@@ -66,7 +66,7 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
             RecoveryCodes = recoveryCodes.ToArray();
 
             _logger.LogInformation("User with ID '{UserId}' has generated new 2FA recovery codes.", userId);
-            StatusMessage = "You have generated new recovery codes.";
+            StatusMessage = "Vous avez généré de nouveaux codes de récupération.";
             return RedirectToPage("./ShowRecoveryCodes");
         }
     }
