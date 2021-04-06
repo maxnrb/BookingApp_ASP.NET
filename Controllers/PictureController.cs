@@ -68,6 +68,8 @@ namespace BookingApp.Views.Accommodation
                 return RedirectToAction(nameof(Index));
             }
 
+            Directory.CreateDirectory(Path.Combine(_environment.WebRootPath, "upload"));
+
             foreach (var formFile in files)
             {
                 if (await _context.Pictures.CountAsync(p => p.AccommodationId == (Guid)id) == 12)
