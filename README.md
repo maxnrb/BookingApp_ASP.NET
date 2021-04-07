@@ -1,6 +1,28 @@
+## Functionality
+### Done
+- Home page:
+  - Research accommodations
+  - View last offers
+- Login & Register:
+  - External authentification (Google)
+  - 2FA authentication
+- CRUD (with research, edit and delete):
+  - Accommodation   
+  - Offer
+  - Booking (no edition and deletion)
+  - User (for Administrator) 
+- Add form:
+  - Accommodation:
+    - General informations
+    - House rules
+    - Manage pictures
+    - Manage rooms and amenities 
+  - Offer
+- Booking page with accommodation and offer informations
+
 ## Installation
 
-## First pull from git
+### First pull from git
 1. If you have the following error message when you launch the project : 
     ```
     Impossible de démarrer le débogage. Impossible de lance le projet de démarrage. Assuerez-vous que le projet approprié est défini en tant que projet de démarrage... 
@@ -16,7 +38,7 @@
     
 3. [IMPORTANT] Launch the project and go to ` <your url>/InitDB ` in order to create Roles in database
 
-## Add External Login/Register
+### Add External Login/Register
 Firstly, you must enable secret storage, for this open .NET Core CLI in the project directory, go in ` View > Terminal ` or use ` Ctrl+ù `.
 
 Then, run the following command : 
