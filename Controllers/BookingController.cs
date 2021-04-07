@@ -42,20 +42,13 @@ namespace BookingApp.Controllers
                 .Include(b => b.Offer)
                 .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (booking == null)
             {
                 return NotFound();
             }
 
             return View(booking);
-        }
-
-        // GET: Booking/Create
-        public IActionResult Create()
-        {
-            ViewData["OfferId"] = new SelectList(_context.Offers, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
         }
 
         // POST: Booking/Create
@@ -81,8 +74,6 @@ namespace BookingApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["OfferId"] = new SelectList(_context.Offers, "Id", "Id", booking.OfferId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
             return View(booking);
         }
 
@@ -99,6 +90,7 @@ namespace BookingApp.Controllers
                 .Include(b => b.Offer)
                 .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (booking == null)
             {
                 return NotFound();

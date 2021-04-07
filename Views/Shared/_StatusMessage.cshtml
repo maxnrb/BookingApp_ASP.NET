@@ -1,7 +1,7 @@
 ﻿@if (@ViewBag.AlertType != null && @ViewBag.AlertMsg != null)
 {
-    <div class="alert alert-@ViewBag.AlertType alert-dismissible fade show" role="alert">
-        @ViewBag.AlertMsg
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+<div class="alert alert-@ViewBag.AlertType alert-dismissible fade show" role="alert">
+    @Html.Raw(ViewBag.AlertMsg)
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 }

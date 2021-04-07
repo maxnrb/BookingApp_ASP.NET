@@ -37,12 +37,12 @@
 
                         <div class="col-md-3">
                             <label style="margin: 0.2em;">Arrivée</label>
-                            <input type="date" class="form-control" name="arrivalDate" min="" required>
+                            <input type="date" class="form-control" name="arrivalDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
                         </div>
 
                         <div class="col-md-3">
                             <label style="margin: 0.2em;">Départ</label>
-                            <input type="date" class="form-control" name="departureDate" min="" required>
+                            <input type="date" class="form-control" name="departureDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
                         </div>
 
                         <div class="col-md-2">
@@ -64,7 +64,14 @@
 <div class="album py-5 bg-light">
     <div class="container">
 
-        <h2>Dernières offres publiées / Offres correspondantes à votre recherche</h2>
+        @if (ViewBag.Search == null)
+        {
+            <h2>Dernières offres publiées</h2>
+        }
+        else
+        {
+            <h2>Offres correspondantes à votre recherche</h2>
+        }
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="margin-top: 1em;">
 

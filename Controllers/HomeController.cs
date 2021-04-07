@@ -55,8 +55,9 @@ namespace BookingApp.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadAsStringAsync();
-                offers = JsonConvert.DeserializeObject<IEnumerable<Offer>>(result);
+                offers = JsonConvert.DeserializeObject<IEnumerable<Offer>>(await response.Content.ReadAsStringAsync());
+
+                ViewBag.Search = true;
             }
 
             return View("Index", offers);

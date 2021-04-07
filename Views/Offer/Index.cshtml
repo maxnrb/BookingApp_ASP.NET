@@ -42,7 +42,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.CleaningFee)
                     </th>
-                    <th></th>
+                    <th style="text-align: right; padding-right: 1em;">
+                        Actions
+                    </th>
                 </tr>
             </thead>
 
@@ -63,16 +65,36 @@
                             @Html.DisplayFor(modelItem => item.EndAvailability)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PricePerNight)
+                            @Html.DisplayFor(modelItem => item.PricePerNight) €
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CleaningFee)
+                            @Html.DisplayFor(modelItem => item.CleaningFee) €
                         </td>
-                        <td>
-                            <a asp-action="View" asp-route-id="@item.Id">View</a> |
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <td style="text-align:right; padding-right:1em;">
+                            <form asp-action="View" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-journal-richtext" style="color:limegreen; padding-right:1em;"></i>
+                                </button>
+                            </form>
+
+                            <form asp-action="Details" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-eye-fill" style="color:dodgerblue; padding-right:1em;"></i>
+                                </button>
+                            </form>
+
+                            <form asp-action="Edit" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-pencil-fill" style="color:orange;  padding-right:1em;"></i>
+                                </button>
+                            </form>
+
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-trash-fill" style="color:red;"></i>
+                                </button>
+                            </form>
+
                         </td>
                     </tr>
                 }
