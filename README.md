@@ -1,7 +1,7 @@
 ## Functionality
 ### Done
 - Home page:
-  - Research accommodations
+  - Research offers
   - View last offers
 - Login & Register:
   - External authentification (Google)
@@ -19,6 +19,7 @@
     - Manage rooms and amenities 
   - Offer
 - Booking page with accommodation and offer informations
+- Offers bookmark
 
 ## Installation
 
