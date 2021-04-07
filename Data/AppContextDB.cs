@@ -21,5 +21,7 @@ namespace BookingApp.Data
         public DbSet<Room> Rooms { get; set; }
 
         public DbSet<Amenity> Amenity { get; set; }
+
+        public DbSet<Bookmark> Bookmark { get; set; }
     }
 }

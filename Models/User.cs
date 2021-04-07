@@ -24,5 +24,8 @@ namespace BookingApp.Models
 
         [Display(Name = "Logement(s)")]
         public virtual List<Accommodation> Accommodations { get; set; }
+
+        [Display(Name = "Favoris")]
+        public virtual List<Bookmark> Bookmarks { get; set; }
     }
 }

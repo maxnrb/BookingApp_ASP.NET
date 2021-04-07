@@ -4,7 +4,11 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="card main-card">
+<div style="padding-top: 0.5em">
+    <partial name="_StatusMessage" />
+</div>
+
+<div class="card main-card-0_5">
 
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -48,25 +52,59 @@
             <div class="row">
 
                 <div class="col-sm-8">
-                    <h3 class="card-title">
-                        @Model.Accommodation.Name
-                    </h3>
+                    <div class="row align-items-center">
+
+                        <div class="col">
+                            <h3>@Model.Accommodation.Name</h3>
+                        </div>
+
+                        <div class="col-auto">
+                            @if (ViewBag.Bookmark != null)
+                            {
+                                if (!ViewBag.Bookmark)
+                                {
+                                    <form asp-action="AddBookmark" style="display: inline-block;">
+                                        <input type="hidden" asp-for="@Model.Id" />
+
+                                        <button style="background: none; padding: 0px; border: none;" type="submit">
+                                            <h3><i class="bi bi-bookmark-plus" style="color:black;"></i></h3>
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="DeleteBookmark" style="display: inline-block;">
+                                        <input type="hidden" asp-for="@Model.Id" />
+
+                                        <button style="background: none; padding: 0px; border: none;" type="submit">
+                                            <h3><i class="bi bi-bookmark-x-fill" style="color:black;"></i></h3>
+                                        </button>
+                                    </form>
+                                }
+                            }
+                        </div>
+                    </div>
 
                     <hr class="solid">
 
                     <div class="d-grid gap-1">
                         <div class="p-1">
-                            <h5 style="display:inline;"><i class="bi bi-house-door"></i></h5>
+                            <h5 style="display:inline;"><i class="bi bi-house-door" style="vertical-align: -1px;"></i></h5>
                             <h6 style="display:inline;">@Model.Accommodation.Type</h6>
                         </div>
 
                         <div class="p-1">
-                            <h5 style="display:inline;"><i class="bi bi-geo-alt"></i></h5>
+                            <h5 style="display:inline;"><i class="bi bi-geo-alt" style="vertical-align: -2px;"></i></h5>
                             <h6 style="display:inline;">@Model.Accommodation.Address.ShortAddress()</h6>
                         </div>
 
                         <div class="p-1">
-                            <h5 style="display:inline;"><i class="bi bi-file-text"></i></h5>
+                            <h5 style="display:inline;"><i class="bi bi-person" style="vertical-align: -1px;"></i></h5>
+                            <h6 style="display:inline;">@Model.Accommodation.MaxTraveler voyageur(s) maximum</h6>
+                        </div>
+
+                        <div class="p-1">
+                            <h5 style="display:inline;"><i class="bi bi-file-text" style="vertical-align: -2px;"></i></h5>
                             <p class="card-text" style="display:inline;">@Model.Accommodation.Description</p>
                         </div>
                     </div>
@@ -92,7 +130,7 @@
                                 </p>
                             </div>
                         </div>
-                                    }
+                    }
 
                     <hr class="solid">
 
@@ -150,17 +188,21 @@
                             <form asp-controller="Booking" asp-action="Create">
                                 <input type="hidden" asp-for="Id" name="OfferId"/>
 
+                                @{ 
+                                    var minArrival = (DateTime.Now > Model.StartAvailability ? DateTime.Now : Model.StartAvailability);
+                                }
+
                                 <div class="row g-3" style="margin-bottom: 0.5em;">
                                     <div class="col col-md-7">
                                         <label for="inputArrivalDate">Arrivé</label>
                                         <input type="date" class="form-control" id="inputArrivalDate" name="ArrivalDate"
-                                               min="" max="" required>
+                                               min="@minArrival.ToString("yyyy-MM-dd")" max="@Model.EndAvailability.AddDays(-1).ToString("yyyy-MM-dd")" required>
                                     </div>
 
                                     <div class="col col-md-5">
                                         <label for="inputArrivalTime">Heure</label>
                                         <input type="time" class="form-control" id="inputArrivalTime" name="ArrivalTime"
-                                               min="" max="23:59" required>
+                                               min="@Model.Accommodation.HouseRules.ArrivalHour.ToString("hh\\:mm")" max="23:59" required>
                                     </div>
                                 </div>
 
@@ -168,20 +210,20 @@
                                     <div class="col col-md-7">
                                         <label for="inputDepartureDate">Départ</label>
                                         <input type="date" class="form-control" id="inputDepartureDate" name="DepartureDate"
-                                               min="" max="" required>
+                                               min="@minArrival.AddDays(1).ToString("yyyy-MM-dd")" max="@Model.EndAvailability.ToString("yyyy-MM-dd")" required>
                                     </div>
 
                                     <div class="col col-md-5">
                                         <label for="inputDepartureTime">Heure</label>
                                         <input type="time" class="form-control" id="inputDepartureTime" name="DepartureTime"
-                                               min="00:00" max="" required>
+                                               min="00:00" max="@Model.Accommodation.HouseRules.DepartureHour.ToString("hh\\:mm")" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="nbPersonSelector">Nombre de voyageur(s)</label>
                                     <select class="form-control form-select" id="nbPersonSelector" name="NbPerson" required>
-                                        @for (int i = 1; i <= 5; i++)
+                                        @for (int i = 1; i <= Model.Accommodation.MaxTraveler; i++)
                                         {
                                             <option>@i</option>
                                         }

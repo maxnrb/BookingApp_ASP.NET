@@ -1,0 +1,112 @@
+﻿@page
+@model BookmarkModel
+@{
+    ViewData["Title"] = "Favoris";
+    ViewData["ActivePage"] = ManageNavPages.Bookmark;
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    @if (Model != null)
+    {
+        int offerNb = 0;
+
+        foreach (var item in Model.Bookmarks)
+        {
+            <div class="col">
+                <div class="card shadow-sm h-100">
+
+                    <div id="carousel-offer-@offerNb" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            @for (int i = 0; i < item.Offer.Accommodation.Pictures.Count; i++)
+                            {
+                                <button type="button" data-bs-target="#carousel-offer-@offerNb" data-bs-slide-to="@i"
+                                        @if (i == 0) { @: class="active" aria-current="true"
+                                        } aria-label="Slide @i"></button>
+                            }
+                        </div>
+
+                        <div class="carousel-inner">
+                            @{ var firstImg = true;
+                                foreach (Picture picture in item.Offer.Accommodation.Pictures)
+                                {
+                                    <div class="carousel-item @if (firstImg) {
+                                            @:active
+                                            firstImg = false; }">
+                                        <img src="~/upload/@picture.FileName" class="d-block w-100 card-img-top" style="object-fit: cover; width: 100%; height: 15em;" alt="">
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-offer-@offerNb" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-offer-@offerNb" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row align-items-start">
+                            <div class="col">
+                                <a asp-controller="Offer" asp-action="View" asp-route-id="@item.Offer.Id.ToString()" style="color: black; text-decoration: none;">
+                                    <h4 class="mb-1">@item.Offer.Accommodation.Address.ShortAddress()</h4>
+                                </a>
+                            </div>
+
+                            <div class="col-auto">
+                                <form asp-page-handler="DeleteBookmark" style="display: inline-block;">
+                                    <input type="hidden" name="offerId" value="@item.Offer.Id" />
+
+                                    <button type="submit" style="background: none; padding: 0px; border: none;">
+                                        <h5><i class="bi bi-bookmark-x-fill" style="color:red;"></i></h5>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <p class="card-text">
+                            Déposée par
+                            <a href="" style="color: black; text-decoration: none; font-weight: bold;">
+                                @Html.DisplayFor(modelItem => item.Offer.Accommodation.User.FirstName) @Html.DisplayFor(modelItem => item.Offer.Accommodation.User.LastName)
+                            </a>
+                        </p>
+
+                        <p>Disponible du @Html.DisplayFor(modelItem => item.Offer.StartAvailability) au @Html.DisplayFor(modelItem => item.Offer.EndAvailability)</p>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a asp-controller="Offer" asp-action="View" asp-route-id="@item.Offer.Id.ToString()" class="btn btn-sm btn-outline-primary">
+                                    Voir l'offre
+                                </a>
+                            </div>
+
+                            <div class="btn-group">
+                                <a href="" class="btn btn-sm btn-outline-primary">
+                                    Profil de l'hôte
+                                </a>
+                            </div>
+
+                            <small class="text-success" style="font-weight: bold;">@Html.DisplayFor(modelItem => item.Offer.PricePerNight) €/Nuit</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            offerNb++;
+        }
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

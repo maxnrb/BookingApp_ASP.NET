@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using BookingApp.Data;
 using BookingApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace BookingApp.Controllers
 {
@@ -14,10 +16,12 @@ namespace BookingApp.Controllers
     public class OfferController : Controller
     {
         private readonly AppContextDB _context;
+        private readonly UserManager<User> _userManager;
 
-        public OfferController(AppContextDB context)
+        public OfferController(AppContextDB context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Offer
@@ -183,10 +187,62 @@ namespace BookingApp.Controllers
 
             if (offer == null)
             {
-                return NotFound();
+                NotFound($"Unable to load offer with ID '{id}'.");
+            }
+
+            var userId = _userManager.GetUserId(User);
+
+            if (userId != null && BookmarkExist(offer.Id, userId))
+            {
+                ViewBag.Bookmark = true;
+            } 
+            else if (userId != null)
+            {
+                ViewBag.Bookmark = false;
+            }
+
+            if (TempData["AlertType"] != null && TempData["AlertMsg"] != null)
+            {
+                ViewBag.AlertType = TempData["AlertType"];
+                ViewBag.AlertMsg = TempData["AlertMsg"];
             }
 
             return View(offer);
+        }
+
+        public async Task<IActionResult> AddBookmark(Guid id)
+        {
+            var userId = _userManager.GetUserId(User);
+
+            if (userId != null)
+            {
+                await new BookmarkController(_context).Add(id, userId);
+
+                TempData["AlertType"] = "success";
+                TempData["AlertMsg"] = "Offre ajoutée aux favoris avec succès ! <a href=\"/Identity/Account/Manage/Bookmark\">Accédez à vos favoris</a>";
+            }
+            
+            return RedirectToAction("View", new { id });
+        }
+
+        public async Task<IActionResult> DeleteBookmark(Guid id)
+        {
+            var userId = _userManager.GetUserId(User);
+
+            if (userId != null)
+            {
+                await new BookmarkController(_context).Delete(id, userId);
+
+                TempData["AlertType"] = "warning";
+                TempData["AlertMsg"] = "Offre supprimée des favoris avec succès ! <a href=\"/Identity/Account/Manage/Bookmark\">Accédez à vos favoris</a>";
+            }
+
+            return RedirectToAction("View", new { id });
+        }
+
+        private bool BookmarkExist(Guid offerId, string userId)
+        {
+            return _context.Bookmark.Any(b => b.OfferId == offerId && b.UserId == userId);
         }
     }
 }
