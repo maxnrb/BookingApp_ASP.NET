@@ -65,11 +65,27 @@ namespace BookingApp.Controllers
                 double pricePerNight = await _context.Offers.Where(o => o.Id == booking.OfferId).Select(o => o.PricePerNight).SingleOrDefaultAsync();
                 double cleaningFee = await _context.Offers.Where(o => o.Id == booking.OfferId).Select(o => o.CleaningFee).SingleOrDefaultAsync();
 
-                booking.TotalPrice = pricePerNight * (double)nbNight + cleaningFee;
-                booking.UserId = (await _userManager.GetUserAsync(User)).Id;
+                User senderUser = await _userManager.GetUserAsync(User);
+                User receiverUser = await _context.Offers.Where(o => o.Id == booking.OfferId).Select(o => o.Accommodation.User).SingleOrDefaultAsync();
 
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
+                // Calcul total price
+                double totalPrice = pricePerNight * (double)nbNight + cleaningFee;
+
+                if (await new TransactionController(_context).DoTransaction(senderUser, receiverUser, totalPrice))
+                {
+                    booking.TotalPrice = totalPrice;
+                    booking.UserId = (await _userManager.GetUserAsync(User)).Id;
+
+                    _context.Add(booking);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    TempData["AlertType"] = "danger";
+                    TempData["AlertMsg"] = "Vous n'avez pas le montant nécessaire pour procéder à la réservation, il vous manque " +  (totalPrice-senderUser.Balance) + " € ! Veuillez <a href=\"/Identity/Account/Manage/Bookmark\">créditer votre compte</a>";
+
+                    return RedirectToAction("View", "Offer", new { id = booking.OfferId });
+                }
 
                 return RedirectToAction(nameof(Index));
             }

@@ -23,5 +23,7 @@ namespace BookingApp.Data
         public DbSet<Amenity> Amenity { get; set; }
 
         public DbSet<Bookmark> Bookmark { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

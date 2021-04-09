@@ -12,6 +12,8 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
 
         public static string Bookmark => "Bookmark";
 
+        public static string Wallet => "Wallet";
+
         public static string Email => "Email";
 
         public static string ChangePassword => "ChangePassword";
@@ -29,6 +31,8 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string BookmarkNavClass(ViewContext viewContext) => PageNavClass(viewContext, Bookmark);
+
+        public static string WalletNavClass(ViewContext viewContext) => PageNavClass(viewContext, Wallet);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
 
