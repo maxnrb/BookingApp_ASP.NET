@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace BookingApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Host")]
     public class OfferController : Controller
     {
         private readonly AppContextDB _context;

@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace BookingApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Host")]
     public class AccommodationController : Controller
     {
         private readonly AppContextDB _context;
