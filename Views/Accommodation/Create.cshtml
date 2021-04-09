@@ -18,11 +18,12 @@
             </li>
         </ul>
     </div>
-    <div class="card-body text-start">
+    <form asp-action="Create">
+        <div class="card-body text-start">
 
-        <h5>Informations générales :</h5>
+            <h5>Informations générales :</h5>
 
-        <form asp-action="Create">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="row form-group">
@@ -122,17 +123,13 @@
                 <input asp-for="HouseRules.SmokeAllowed" type="checkbox" class="form-check-input">
                 <label asp-for="HouseRules.SmokeAllowed" class="form-check-label"></label>
             </div>
+        </div>
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+        <div class="form-group">
+            <input type="submit" value="Sauvegarder" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-outline-secondary">Retour au CRUD</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

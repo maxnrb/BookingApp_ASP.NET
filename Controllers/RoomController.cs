@@ -69,7 +69,8 @@ namespace BookingApp.Controllers
                 case "Bedroom":
                     if (tv == null && closet == null && (singleBedNumber == null || int.Parse(singleBedNumber) == 0) && (doubleBedNumber == null || int.Parse(doubleBedNumber) == 0))
                     {
-
+                        ViewBag.AlertType = "danger";
+                        ViewBag.AlertMsg = "Veuillez ajouter au moins un équipement à votre pièce !";
                     }
                     else
                     {
@@ -87,7 +88,8 @@ namespace BookingApp.Controllers
                 case "Bathroom":
                     if (bathtub == null && shower == null && washingMachine == null)
                     {
-
+                        ViewBag.AlertType = "danger";
+                        ViewBag.AlertMsg = "Veuillez ajouter au moins un équipement à votre pièce !";
                     } 
                     else
                     {
@@ -103,7 +105,8 @@ namespace BookingApp.Controllers
                 case "Kitchen":
                     if (oven == null && freezer == null && coffeeMaker == null)
                     {
-
+                        ViewBag.AlertType = "danger";
+                        ViewBag.AlertMsg = "Veuillez ajouter au moins un équipement à votre pièce !";
                     } 
                     else
                     {
