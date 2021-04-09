@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace BookingApp.Models
 {
@@ -27,10 +28,24 @@ namespace BookingApp.Models
 
         public override string ToString()
         {
-            return ToFr(Enum.GetName(typeof(AmenityTypes), this.AmenityType));
+            return AmenityTools.ToFr(Enum.GetName(typeof(AmenityTypes), this.AmenityType));
+        }
+    }
+
+    public static class AmenityTools
+    {
+        public static List<string> AmenitiesForRoom(string roomType)
+        {
+            return roomType switch
+            {
+                "Bedroom" => new List<string> { "SingleBed", "DoubleBed", "TV", "Closet" },
+                "Bathroom" => new List<string> { "Bathtub", "Shower", "WashingMachine" },
+                "Kitchen" => new List<string> { "Oven", "Freezer", "CoffeeMaker" },
+                _ => null,
+            };
         }
 
-        public string ToFr(string amenityType)
+        public static string ToFr(string amenityType)
         {
             return amenityType switch
             {

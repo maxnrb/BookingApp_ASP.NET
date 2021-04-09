@@ -87,10 +87,16 @@
                                 @TypeTranslate.ToFr(Enum.GetName(typeof(RoomTypes), item.RoomType))
                             </h5>
 
-                            <p class="card-text">
+                            <div class="card-text">
                                 <b>Équipements: </b>
                                 @item.AmenitiesStr()
-                            </p>
+
+                                <form asp-action="ManageAmenities" asp-controller="Accommodation" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                    <button style="background: none; padding: 0px; border: none;" type="submit">
+                                        <i class="bi bi-pencil-fill" style="color:orange; padding-left: 0.5em"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }

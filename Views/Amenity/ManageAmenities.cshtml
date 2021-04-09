@@ -1,0 +1,82 @@
+﻿@model BookingApp.Models.Room
+
+@{
+    ViewData["Title"] = "CRUD Equipements";
+}
+
+<div style="padding-top: 0.5em">
+    <partial name="_StatusMessage" />
+</div>
+
+<div class="card main-card-0_5">
+    <div class="card-body table-responsive">
+
+        <div class="card-header">
+            <div class="row align-items-center">
+
+                <div class="col">
+                    <h2>Equipement @TypeTranslate.ToFr(Model.RoomType.ToString())</h2>
+                </div>
+
+                <div class="col-auto">
+                    <input id="searchInput" class="form-control" type="text" placeholder="Rechercher">
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Type d'équipement
+                    </th>
+
+                    <th style="text-align: right; padding-right: 1em;">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="resultTable">
+                @foreach (var item in Model.Amenities)
+                {
+                    <tr>
+                        <td>
+                            @AmenityTools.ToFr(item.AmenityType.ToString())
+                        </td>
+                        <td style="text-align:right; padding-right:1em;">
+
+                            <form asp-action="DeleteAmenity" asp-controller="Accommodation" asp-route-id="@item.Id" style="display: inline-block;">
+                                <input type="hidden" asp-for="@item.RoomId" name="roomId" />
+
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-trash-fill" style="color:red;"></i>
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div>
+            <form class="row row-cols-lg-auto g-3 align-items-center" asp-action="AddAmenity" asp-controller="Accommodation" asp-route-id="@Model.Id">
+                <div class="col-12">
+                    <select name="amenityType" class="form-select">
+                        @foreach (string amenityTypeStr in ViewBag.AmenityTypes)
+                        {
+                            <option value="@amenityTypeStr">@AmenityTools.ToFr(amenityTypeStr)</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-success" type="submit">
+                        <span class="bi bi-plus"></span> Ajouter
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
