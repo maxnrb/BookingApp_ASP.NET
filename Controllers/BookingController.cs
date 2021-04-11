@@ -90,7 +90,7 @@ namespace BookingApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(booking);
+            return View(nameof(Index));
         }
 
 

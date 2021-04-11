@@ -11,7 +11,7 @@
                 <a class="nav-link active" aria-current="true" href="#">Informations</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Accommodation" asp-action="ManagePictures" asp-route-id="@Model.Id">
+                <a class="nav-link" asp-controller="Picture" asp-action="ManagePictures" asp-route-id="@Model.Id">
                     Photos
                     @if (Model.Pictures != null && Model.Pictures.Count == 0)
                     {
@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Accommodation" asp-action="ManageRooms" asp-route-id="@Model.Id">
+                <a class="nav-link" asp-controller="Room" asp-action="ManageRooms" asp-route-id="@Model.Id">
                     Pièces
                     @if (Model.Rooms != null && Model.Rooms.Count == 0)
                     {

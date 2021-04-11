@@ -45,7 +45,7 @@
                         </td>
                         <td style="text-align:right; padding-right:1em;">
 
-                            <form asp-action="DeleteAmenity" asp-controller="Accommodation" asp-route-id="@item.Id" style="display: inline-block;">
+                            <form asp-action="DeleteAmenity" asp-controller="Amenity" asp-route-id="@item.Id" style="display: inline-block;">
                                 <input type="hidden" asp-for="@item.RoomId" name="roomId" />
 
                                 <button style="background: none; padding: 0px; border: none;" type="submit">
@@ -60,7 +60,7 @@
         </table>
 
         <div>
-            <form class="row row-cols-lg-auto g-3 align-items-center" asp-action="AddAmenity" asp-controller="Accommodation" asp-route-id="@Model.Id">
+            <form class="row row-cols-lg-auto g-3 align-items-center" asp-action="AddAmenity" asp-controller="Amenity" asp-route-id="@Model.Id">
                 <div class="col-12">
                     <select name="amenityType" class="form-select">
                         @foreach (string amenityTypeStr in ViewBag.AmenityTypes)

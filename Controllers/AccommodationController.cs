@@ -75,20 +75,16 @@ namespace BookingApp.Controllers
             [Bind("StreetAndNumber, Complement, City, PostalCode, Country")] Address address,
             [Bind("ArrivalHour, DepartureHour, PetAllowed, PartyAllowed, SmokeAllowed")] HouseRules houseRules)
         {
-
-            if (ModelState.IsValid)
-            {
-                accommodation.UserId = (await _userManager.GetUserAsync(User)).Id;
-                accommodation.Address = address;
-                accommodation.HouseRules = houseRules;
+            if (!ModelState.IsValid) { return View(accommodation); }
+            
+            accommodation.UserId = (await _userManager.GetUserAsync(User)).Id;
+            accommodation.Address = address;
+            accommodation.HouseRules = houseRules;
                 
-                _context.Add(accommodation);
-                await _context.SaveChangesAsync();
+            _context.Add(accommodation);
+            await _context.SaveChangesAsync();
 
-                return RedirectToAction("ManagePictures", new { id = accommodation.Id });
-            }
-
-            return View(accommodation);
+            return RedirectToAction("ManagePictures", "Picture", new { id = accommodation.Id });
         }
 
         // GET: Accommodation/Edit/5
@@ -128,34 +124,29 @@ namespace BookingApp.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) { return View(accommodation); }
+            
+            // Get accommodation's user
+            accommodation.UserId = await _context.Accommodations.Where(a => a.Id == id).Select(a => a.UserId).SingleOrDefaultAsync();
+            accommodation.Address = address;
+            accommodation.HouseRules = houseRules;
+
+            try
             {
-                // Get accommodation's user
-                accommodation.UserId = await _context.Accommodations.Where(a => a.Id == id).Select(a => a.UserId).SingleOrDefaultAsync();
-                accommodation.Address = address;
-                accommodation.HouseRules = houseRules;
-
-                try
+                _context.Update(accommodation);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AccommodationExists(accommodation.Id))
                 {
-                    _context.Update(accommodation);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AccommodationExists(accommodation.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
 
-                return RedirectToAction("Edit", new { id });
+                throw;
             }
 
-            return View(accommodation);
+            return RedirectToAction("Edit", new { id });
         }
 
         // GET: Accommodation/Delete/5

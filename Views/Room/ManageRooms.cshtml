@@ -33,7 +33,7 @@
                 <a class="nav-link" asp-controller="Accommodation" asp-action="Edit" asp-route-id="@Model.Id">Informations</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Accommodation" asp-action="ManagePictures" asp-route-id="@Model.Id">
+                <a class="nav-link" asp-controller="Picture" asp-action="ManagePictures" asp-route-id="@Model.Id">
                     Photos
                     @if (Model.Pictures.Count == 0)
                     {
@@ -172,7 +172,7 @@
                                 <b>Équipements: </b>
                                 @item.AmenitiesStr()
 
-                                <form asp-action="ManageAmenities" asp-controller="Accommodation" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                <form asp-action="ManageAmenities" asp-controller="Amenity" asp-route-id="@item.Id" method="get" style="display: inline-block;">
                                     <button style="background: none; padding: 0px; border: none;" type="submit">
                                         <i class="bi bi-pencil-fill" style="color:orange; padding-left: 0.5em"></i>
                                     </button>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Controllers
 {
+    [Route("Accommodation")]
     public class AmenityController : Controller
     {
         private readonly AppContextDB _context;
@@ -19,7 +20,7 @@ namespace BookingApp.Controllers
         }
 
         // GET: Accommodation/ManageAmenities/5
-        [Route("Accommodation/ManageAmenities/{roomId?}")]
+        [Route("ManageAmenities/{roomId:guid?}")]
         public async Task<IActionResult> ManageAmenities(Guid? roomId)
         {
             if (roomId == null) { return NotFound(); }
@@ -45,7 +46,7 @@ namespace BookingApp.Controllers
 
         // POST: Accommodation/AddAmenity/5
         [HttpPost]
-        [Route("Accommodation/AddAmenity/{roomId}")]
+        [Route("AddAmenity/{roomId:guid}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddAmenity(Guid roomId, string amenityType)
         {
@@ -74,7 +75,7 @@ namespace BookingApp.Controllers
 
         // POST: Accommodation/DeleteAmenity/5
         [HttpPost]
-        [Route("Accommodation/DeleteAmenity/{amenityId}")]
+        [Route("DeleteAmenity/{amenityId:guid}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAmenity(Guid amenityId, Guid roomId)
         {

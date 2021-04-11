@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Views.Accommodation
 {
+    [Route("Accommodation")]
     public class PictureController : Controller
     {
         private readonly AppContextDB _context;
@@ -24,7 +25,7 @@ namespace BookingApp.Views.Accommodation
         }
 
         // GET: Accommodation/ManagePictures/5
-        [Route("Accommodation/ManagePictures/{id?}")]
+        [Route("ManagePictures/{id:guid?}")]
         public async Task<IActionResult> ManagePictures(Guid? id)
         {
             if (id == null)
@@ -59,13 +60,13 @@ namespace BookingApp.Views.Accommodation
 
         // POST: Accommodation/ManagePictures/5
         [HttpPost]
-        [Route("Accommodation/ManagePictures/{id?}")]
+        [Route("ManagePictures/{id:guid?}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ManagePictures(Guid? id, List<IFormFile> files)
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
 
             Directory.CreateDirectory(Path.Combine(_environment.WebRootPath, "upload"));
@@ -99,7 +100,7 @@ namespace BookingApp.Views.Accommodation
         }
 
         // GET: Accommodation/DeletePicture/5
-        [Route("Accommodation/DeletePicture/{id}")]
+        [Route("DeletePicture/{id:guid}")]
         public async Task<IActionResult> DeletePicture(Guid id, Guid accommodationId)
         {
             // TODO: Check if user own the picture
