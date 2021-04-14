@@ -45,6 +45,9 @@ namespace BookingApp
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
 
+            services.Configure<SecurityStampValidatorOptions>(o =>
+                o.ValidationInterval = TimeSpan.FromSeconds(0));
+
             services.AddControllersWithViews();
         }
 

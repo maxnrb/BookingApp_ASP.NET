@@ -20,6 +20,8 @@ namespace BookingApp.Controllers
 
         public UserController(AppContextDB context,  UserManager<User> userManager)
         {
+
+
             _context = context;
             _userManager = userManager;
         }
@@ -135,6 +137,8 @@ namespace BookingApp.Controllers
                     await _userManager.AddToRoleAsync(user, Input.Role);
                 }
 
+                // Update Security Stamp in order to refresh user cookie
+                await _userManager.UpdateSecurityStampAsync(user);
                 await _userManager.UpdateAsync(user);
             }
 
