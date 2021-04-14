@@ -1,57 +1,66 @@
 ﻿@model BookingApp.Models.Offer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails Offre";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Offer</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Accommodation)
-        </dt>
-        <dd class = "col-sm-10">
-            <a href="@Url.Action("Details", "Accommodation", new { id = Model.Accommodation.Id })" class="elements">
-                @Html.DisplayFor(model => model.Accommodation.Id)
-            </a>
-            
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AddingDateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AddingDateTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartAvailability)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartAvailability)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndAvailability)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndAvailability)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PricePerNight)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PricePerNight)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CleaningFee)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CleaningFee)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="card main-card">
+    <div class="card-header">
+        <h3>Offre - Détails</h3>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Accommodation)
+            </dt>
+            <dd class="col-sm-10">
+                <a asp-controller="Accommodation" asp-action="Details" asp-route-id="@Model.Accommodation.Id" class="text-dark">
+                    @Html.DisplayFor(model => model.Accommodation.Name)
+                </a>
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AddingDateTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AddingDateTime)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StartAvailability)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StartAvailability)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EndAvailability)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EndAvailability)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PricePerNight)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PricePerNight)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CleaningFee)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CleaningFee)
+            </dd>
+        </dl>
+
+        <div class="text-center">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edition</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Retour au CRUD</a>
+        </div>
+    </div>
+
 </div>

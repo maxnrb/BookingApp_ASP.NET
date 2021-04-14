@@ -4,156 +4,168 @@
     ViewData["Title"] = "Détails Logement";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Accommodation</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+<div class="card main-card">
+    <div class="card-header">
+        <h3>Logement - Détails</h3>
+    </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Address.ToString()
-        </dd>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pictures)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.Pictures.Count != 0)
-            {
-                <div class="row row-cols-1 row-cols-md-4 g-4">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Address
+            </dd>
 
-                    @foreach (var item in Model.Pictures)
-                    {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.HouseRules)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.HouseRules
+            </dd>
 
-                        <div class="col">
-                            <div class="card">
-                                <a href="~/upload/@Html.DisplayFor(modelItem => item.FileName)" target="_blank">
-                                    <img src="~/upload/@Html.DisplayFor(modelItem => item.FileName)" class="card-img-top"
-                                         style="object-fit: cover; width: 100%; height: 11em;">
-                                </a>
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
-            else
-            {
-                <p>Aucune photo ajoutée</p>
-            }
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rooms)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.Rooms.Count != 0)
-            {
-                foreach (var item in Model.Rooms)
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Pictures)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.Pictures.Count != 0)
                 {
-                    <div class="card" style="margin-bottom:1em;">
-                        <div class="card-body">
-                            @{ var iconSrc = item.RoomType.ToString().ToLower() + ".svg"; }
+                    <div class="row row-cols-1 row-cols-md-4 g-4">
 
-                            <h5 class="card-title">
-                                <img src="~/svg/@iconSrc" alt="Room icon" height="20px" width="20px" style="vertical-align: -3px;" />
-                                @TypeTranslate.ToFr(Enum.GetName(typeof(RoomTypes), item.RoomType))
-                            </h5>
+                        @foreach (var item in Model.Pictures)
+                        {
 
-                            <div class="card-text">
-                                <b>Équipements: </b>
-                                @item.AmenitiesStr()
-
-                                <form asp-action="ManageAmenities" asp-controller="Amenity" asp-route-id="@item.Id" method="get" style="display: inline-block;">
-                                    <button style="background: none; padding: 0; border: none;" type="submit">
-                                        <i class="bi bi-pencil-fill" style="color:orange; padding-left: 0.5em"></i>
-                                    </button>
-                                </form>
+                            <div class="col">
+                                <div class="card">
+                                    <a href="~/upload/@Html.DisplayFor(modelItem => item.FileName)" target="_blank">
+                                        <img src="~/upload/@Html.DisplayFor(modelItem => item.FileName)" class="card-img-top"
+                                             style="object-fit: cover; width: 100%; height: 11em;">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 }
-            }
-            else
-            {
-                <p>Aucune pièce ajoutée</p>
-            }
-        </dd>
+                else
+                {
+                    <p>Aucune photo ajoutée</p>
+                }
+            </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Offers)
-        </dt>
-
-        <dd class="col-sm-10">
-            @if (Model.Offers.Count != 0)
-            {
-
-                <table class="table">
-                    <tr>
-                        <th>Date d'ajout</th>
-                        <th>Début disponibilité</th>
-                        <th>Fin disponibilité</th>
-                        <th>Prix / Nuit</th>
-                        <th>Frais de ménage</th>
-                    </tr>
-                    @foreach (var item in Model.Offers)
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Rooms)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.Rooms.Count != 0)
+                {
+                    foreach (var item in Model.Rooms)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.AddingDateTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StartAvailability)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EndAvailability)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PricePerNight)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CleaningFee)
-                            </td>
-                        </tr>
-                    }
-                </table>
-            }
-            else
-            {
-                <p>Aucune offre ajoutée</p>
-            }
-        </dd>
+                        <div class="card" style="margin-bottom:1em;">
+                            <div class="card-body">
+                                @{ var iconSrc = item.RoomType.ToString().ToLower() + ".svg"; }
 
-    </dl>
+                                <h5 class="card-title">
+                                    <img src="~/svg/@iconSrc" alt="Room icon" height="20px" width="20px" style="vertical-align: -3px;" />
+                                    @TypeTranslate.ToFr(Enum.GetName(typeof(RoomTypes), item.RoomType))
+                                </h5>
+
+                                <div class="card-text">
+                                    <b>Équipements: </b>
+                                    @item.AmenitiesStr()
+
+                                    <form asp-action="ManageAmenities" asp-controller="Amenity" asp-route-roomId="@item.Id" method="get" style="display: inline-block;">
+                                        <button style="background: none; padding: 0; border: none;" type="submit">
+                                            <i class="bi bi-pencil-fill" style="color:orange; padding-left: 0.5em"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Aucune pièce ajoutée</p>
+                }
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Offers)
+            </dt>
+
+            <dd class="col-sm-10">
+                @if (Model.Offers.Count != 0)
+                {
+
+                    <table class="table">
+                        <tr>
+                            <th>Date d'ajout</th>
+                            <th>Début disponibilité</th>
+                            <th>Fin disponibilité</th>
+                            <th>Prix / Nuit</th>
+                            <th>Frais de ménage</th>
+                        </tr>
+                        @foreach (var item in Model.Offers)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AddingDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartAvailability)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndAvailability)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PricePerNight)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CleaningFee)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p>Aucune offre ajoutée</p>
+                }
+            </dd>
+
+        </dl>
+
+        <div class="text-center">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edition</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Retour au CRUD</a>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
