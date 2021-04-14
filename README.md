@@ -31,16 +31,16 @@
     ```
     Juste close the solution (project) and re-open it via the ` BookingApp.sln `
 
-2. [IMPORTANT] Create the dabatase (with the help of ` Migrations ` directory) with Entity Framework :
+2. **[IMPORTANT]** Create the dabatase (with the help of ` Migrations ` directory) with Entity Framework :
 
     Go in ` Tools > NuGet Package Manager > Package Manager Console `, and enter:
     ```powershell
     Update-Database
     ```
     
-3. [IMPORTANT] Launch the project and go to ` <your url>/InitDB ` (ex: ` https://localhost:44369/InitDB ` ) in order to create Roles and default Users in database
+3. **[IMPORTANT]** Launch the project and go to ` <your url>/InitDB ` *(ex: ` https://localhost:44369/InitDB ` )* in order to create Roles and default Users in database
 
-    The following users are created (delete this users or change password for production !) :
+    The following users are created **(delete these users or change passwords for production !)** :
     
     - User > email : ` user@user.fr ` - password : ` 123456 `
     - Host > email : ` host@host.fr ` - password : ` 123456 `
@@ -68,12 +68,6 @@ dotnet user-secrets init
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) - Microsoft SQL Server is a relational database management system developed by Microsoft.
 - [Bootstrap](https://getbootstrap.com/) - Bootstrap is a free and open-source CSS framework directed at responsive, designed for front-end web development.
 
-## Installed packages
-Already installed via ` Tools > NuGet Package Manager > Package Manager Console `
-
-- EntityFrameworkCore for Microsoft SQL Server: ` Microsoft.EntityFrameworkCore.SqlServer `
-- EntityFrameworkCore Design in order to generate CRUD: `  Microsoft.EntityFrameworkCore.Design `
-- Identity UI for login/register interfaces: ` Microsoft.AspNetCore.Identity.UI `
 
 ## Author
 - [MaximeNrb](https://github.com/maximenrb)
