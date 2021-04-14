@@ -48,41 +48,41 @@
             <tbody id="resultTable">
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.Raw((await userManager.GetRolesAsync(item)).FirstOrDefault())
-                    </td>
-                    <td style="text-align:right; padding-right:1em;">
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.Raw((await userManager.GetRolesAsync(item)).FirstOrDefault())
+                        </td>
+                        <td style="text-align:right; padding-right:1em;">
 
-                        <form asp-action="Details" asp-route-id="@item.Id" method="get" style="display: inline-block;">
-                            <button style="background: none; padding: 0px; border: none;" type="submit">
-                                <i class="bi bi-eye-fill" style="color:dodgerblue; padding-right:1em;"></i>
-                            </button>
-                        </form>
+                            <form asp-action="Details" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-eye-fill" style="color:dodgerblue; padding-right:1em;"></i>
+                                </button>
+                            </form>
 
-                        <form asp-action="Edit" asp-route-id="@item.Id" method="get" style="display: inline-block;">
-                            <button style="background: none; padding: 0px; border: none;" type="submit">
-                                <i class="bi bi-pencil-fill" style="color:orange;  padding-right:1em;"></i>
-                            </button>
-                        </form>
+                            <form asp-action="Edit" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-pencil-fill" style="color:orange;  padding-right:1em;"></i>
+                                </button>
+                            </form>
 
-                        <form asp-action="Delete" asp-route-id="@item.Id" method="get" style="display: inline-block;">
-                            <button style="background: none; padding: 0px; border: none;" type="submit">
-                                <i class="bi bi-trash-fill" style="color:red;"></i>
-                            </button>
-                        </form>
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="get" style="display: inline-block;">
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-trash-fill" style="color:red;"></i>
+                                </button>
+                            </form>
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

@@ -25,7 +25,7 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Offer)
+                        @Html.DisplayNameFor(model => model.Offer.Accommodation)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.User)
@@ -37,7 +37,7 @@
                         Date et horaire d'arrivée
                     </th>
                     <th>
-                        Date et horaire de départ 
+                        Date et horaire de départ
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.NbPerson)
@@ -45,15 +45,20 @@
                     <th>
                         @Html.DisplayNameFor(model => model.TotalPrice)
                     </th>
-                    <th></th>
+                    <th style="text-align: right; padding-right: 1em;">
+                        Actions
+                    </th>
                 </tr>
             </thead>
+
             <tbody id="resultTable">
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Offer.Id)
+                            <a asp-controller="Accommodation" asp-action="Details" asp-route-id="@item.Offer.Accommodation.Id" class="text-dark">
+                                @Html.DisplayFor(modelItem => item.Offer.Accommodation.Name)
+                            </a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.User.Email)
@@ -73,9 +78,15 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.TotalPrice) €
                         </td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <td style="text-align:right; padding-right:1em;">
+                            <form asp-action="Details" style="display: inline-block;">
+                                <input type="hidden" name="id" asp-for="@item.Id" />
+                                <input type="hidden" name="returnAction" value="@ViewBag.ReturnAction" />
+
+                                <button style="background: none; padding: 0px; border: none;" type="submit">
+                                    <i class="bi bi-eye-fill" style="color:dodgerblue; padding-right:1em;"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 }

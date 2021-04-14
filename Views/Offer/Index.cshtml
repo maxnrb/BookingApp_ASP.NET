@@ -53,7 +53,9 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Accommodation.Id)
+                            <a asp-controller="Accommodation" asp-action="Details" asp-route-id="@item.Accommodation.Id" class="text-dark">
+                                @Html.DisplayFor(modelItem => item.Accommodation.Name)
+                            </a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.AddingDateTime)

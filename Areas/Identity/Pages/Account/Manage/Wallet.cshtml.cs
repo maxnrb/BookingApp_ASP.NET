@@ -39,7 +39,7 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
             public double CreditAmount { get; set; }
         }
 
-        private async Task LoadAsync(User user)
+        private void Load(User user)
         {
             AccountBalance = user.Balance;
 
@@ -55,7 +55,7 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            await LoadAsync(user);
+            Load(user);
             return Page();
         }
 
