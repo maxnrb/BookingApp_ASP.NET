@@ -20,6 +20,7 @@
   - Offer
 - Booking page with accommodation and offer informations
 - Offers bookmark
+- E-Wallet and transaction
 
 ## Installation
 
@@ -37,7 +38,11 @@
     Update-Database
     ```
     
-3. [IMPORTANT] Launch the project and go to ` <your url>/InitDB ` in order to create Roles in database
+3. [IMPORTANT] Launch the project and go to ` <your url>/InitDB ` (ex: ` https://localhost:44369/InitDB ` ) in order to create Roles and default Users in database
+
+    The created users are the following :
+    
+    - User : email : `` password ``
 
 ### Add External Login/Register
 Firstly, you must enable secret storage, for this open .NET Core CLI in the project directory, go in ` View > Terminal ` or use ` Ctrl+ù `.
