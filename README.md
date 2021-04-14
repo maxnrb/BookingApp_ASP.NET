@@ -42,9 +42,9 @@
 
     The following users are created **(delete these users or change passwords for production !)** :
     
-    - User > email : ` user@user.fr ` - password : ` 123456 `
-    - Host > email : ` host@host.fr ` - password : ` 123456 `
-    - Admin > email : ` admin@admin.fr ` - password : ` 123456 `
+    - User > email : ` user@user.fr ` - password : ` 123aA_ `
+    - Host > email : ` host@host.fr ` - password : ` 123aA_ `
+    - Admin > email : ` admin@admin.fr ` - password : ` 123aA_ `
 
 ### Add External Login/Register
 Firstly, you must enable secret storage, for this open .NET Core CLI in the project directory, go in ` View > Terminal ` or use ` Ctrl+ù `.
