@@ -13,6 +13,7 @@ namespace BookingApp.Models
 		//private User user;
 
 		public Guid AccommodationId { get; set; }
+		[Display(Name = "Logement")]
 		public virtual Accommodation Accommodation { get; set; }
 
 		[Display(Name = "Date d'ajout")]

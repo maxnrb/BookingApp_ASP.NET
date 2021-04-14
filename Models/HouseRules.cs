@@ -32,5 +32,11 @@ namespace BookingApp.Models
 
         [Display(Name = "Logement fumeur")]
         public bool SmokeAllowed { get; set; }
+
+        public override string ToString()
+        {
+            return "Animaux : " + (PetAllowed ? "Oui" : "Non") + " -- Fête : " + (PartyAllowed ? "Oui" : "Non") + " -- Fumeur : " + (SmokeAllowed ? "Oui" : "Non")
+                + " || Heure arrivée : " + ArrivalHour.ToString("hh\\hmm") + " -- Heure départ : " + DepartureHour.ToString("hh\\hmm");
+        }
     }
 }

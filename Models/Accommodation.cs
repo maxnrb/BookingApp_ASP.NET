@@ -22,7 +22,7 @@ namespace BookingApp.Models
 		[Display(Name = "Adresse")]
 		public virtual Address Address { get; set; }
 
-		[Display(Name = "Règlement Intérieur")]
+		[Display(Name = "Règlement intérieur")]
 		public virtual HouseRules HouseRules { get; set; }
 
 		[Display(Name = "Photo(s)")]
