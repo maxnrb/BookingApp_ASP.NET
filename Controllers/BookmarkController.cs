@@ -1,46 +1,46 @@
 ﻿using BookingApp.Data;
 using BookingApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BookingApp.Controllers
 {
+    [Authorize]
     public class BookmarkController : Controller
     {
         private readonly AppContextDB _context;
+        private readonly string _userId;
 
-        public BookmarkController(AppContextDB context)
+        public BookmarkController(AppContextDB context, string userId)
         {
             _context = context;
+            _userId = userId;
         }
 
-        // POST: BookmarkController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task Add(Guid offerId, string userId)
+        public async Task Add(Guid offerId)
         {
-            if (userId != null && BookmarkExists(offerId, userId) == null)
+            // Check if bookmark already exist for actual connected user
+            if (BookmarkExists(offerId) == null)
             {
                 Bookmark bookmark = new();
                 bookmark.OfferId = offerId;
-                bookmark.UserId = userId;
+                bookmark.UserId = _userId;
 
                 await _context.Bookmark.AddAsync(bookmark);
                 await _context.SaveChangesAsync();
             }
         }
 
-        // POST: BookmarkController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task Delete(Guid offerId, string userId)
+        public async Task Delete(Guid offerId)
         {
-            var bookmark = BookmarkExists(offerId, userId);
+            var bookmark = BookmarkExists(offerId);
 
             if (bookmark != null)
             {
@@ -49,9 +49,11 @@ namespace BookingApp.Controllers
             }
         }
 
-        private Bookmark BookmarkExists(Guid offerId, string userId)
+        // Check if bookmark already exist for actual connected user
+        // Return the bookmark if it exists
+        private Bookmark BookmarkExists(Guid offerId)
         {
-            return _context.Bookmark.Where(b => b.OfferId == offerId && b.UserId == userId).SingleOrDefault();
+            return _context.Bookmark.Where(b => b.OfferId == offerId && b.UserId == _userId).SingleOrDefault();
         }
     }
 }

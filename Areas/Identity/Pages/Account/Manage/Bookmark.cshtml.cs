@@ -56,17 +56,7 @@ namespace BookingApp.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostDeleteBookmarkAsync(Guid offerId)
         {
-            var userId = _userManager.GetUserId(User);
-
-            if (userId == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            } 
-            else
-            {
-                await new BookmarkController(_context).Delete(offerId, userId);
-            }
-
+            await new BookmarkController(_context, _userManager.GetUserId(User)).Delete(offerId);
 
             return RedirectToPage();
         }
