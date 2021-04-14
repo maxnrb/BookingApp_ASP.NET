@@ -38,29 +38,53 @@
 
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    CRUD
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a class="dropdown-item" asp-controller="Accommodation" asp-action="Index">Logement</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Offer" asp-action="Index">Offre</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Booking" asp-action="Index">Réservation</a></li>
-                                </ul>
-                            </li>
-
                             User user = await UserManager.GetUserAsync(User);
 
-                            if (user != null && await UserManager.IsInRoleAsync(user, "Admin"))
+                            if (user != null)
                             {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Administration
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <li><a class="dropdown-item" asp-controller="User" asp-action="Index">CRUD Utilisateur</a></li>
-                                    </ul>
-                                </li>
+                                if (await UserManager.IsInRoleAsync(user, "User"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Booking" asp-action="Index">Vos réservations</a>
+                                    </li>
+                                }
+                                else if (await UserManager.IsInRoleAsync(user, "Host"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Accommodation" asp-action="Index">Vos logements</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Offer" asp-action="Index">Vos offres</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Booking" asp-action="Index">Vos réservations</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Booking" asp-action="HostIndex">Réservations reçues</a>
+                                    </li>
+                                }
+                                else if (await UserManager.IsInRoleAsync(user, "Admin"))
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            CRUD
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <li><a class="dropdown-item" asp-controller="Accommodation" asp-action="Index">Logement</a></li>
+                                            <li><a class="dropdown-item" asp-controller="Offer" asp-action="Index">Offre</a></li>
+                                            <li><a class="dropdown-item" asp-controller="Booking" asp-action="Index">Réservation</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Administration
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <li><a class="dropdown-item" asp-controller="User" asp-action="Index">CRUD Utilisateur</a></li>
+                                        </ul>
+                                    </li>
+                                }
                             }
                         }
                     </ul>
