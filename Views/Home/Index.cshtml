@@ -123,9 +123,7 @@
 
                                 <p class="card-text">
                                     Déposée par
-                                    <a href="" style="color: black; text-decoration: none; font-weight: bold;">
-                                        @Html.DisplayFor(modelItem => item.Accommodation.User.FirstName) @Html.DisplayFor(modelItem => item.Accommodation.User.LastName)
-                                    </a>
+                                    @Html.DisplayFor(modelItem => item.Accommodation.User.FirstName) @Html.DisplayFor(modelItem => item.Accommodation.User.LastName)
                                 </p>
 
                                 <p>Disponible du @Html.DisplayFor(modelItem => item.StartAvailability) au @Html.DisplayFor(modelItem => item.EndAvailability)</p>
@@ -134,12 +132,6 @@
                                     <div class="btn-group">
                                         <a asp-controller="Offer" asp-action="View" asp-route-id="@item.Id.ToString()" class="btn btn-sm btn-outline-secondary">
                                             Voir l'offre
-                                        </a>
-                                    </div>
-
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-sm btn-outline-secondary">
-                                            Profil de l'hôte
                                         </a>
                                     </div>
 
