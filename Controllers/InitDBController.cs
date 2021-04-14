@@ -32,10 +32,24 @@ namespace BookingApp.Controllers
                 await _roleManager.CreateAsync(new IdentityRole() { Name = "User" });
 
                 returnText += "Roles created<br/>";
+
+                var userUser = new User { UserName = "user@user.fr", Email = "user@user.fr", FirstName = "Utilisateur", LastName = "Utilisateur" };
+                await _userManager.CreateAsync(userUser, "123456");
+                await _userManager.AddToRoleAsync(userUser, "User");
+
+                var hostUser = new User { UserName = "host@host.fr", Email = "host@host.fr", FirstName = "Hôte", LastName = "Hôte" };
+                await _userManager.CreateAsync(hostUser, "123456");
+                await _userManager.AddToRoleAsync(hostUser, "Host");
+
+                var adminUser = new User { UserName = "admin@admin.fr", Email = "admin@admin.fr", FirstName = "Administrateur", LastName = "Administrateur" };
+                await _userManager.CreateAsync(adminUser, "123456");
+                await _userManager.AddToRoleAsync(adminUser, "Admin");
+
+                returnText += "Default users created (User, Host and Admin)<br/>";
             } 
             else
             {
-                returnText += "Roles already created<br/>";
+                returnText += "Roles and users already created<br/>";
             }
 
             var user = await _userManager.GetUserAsync(User);
