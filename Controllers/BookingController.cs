@@ -26,27 +26,58 @@ namespace BookingApp.Controllers
         // GET: Booking
         public async Task<IActionResult> Index()
         {
-            var appContextDB = _context.Booking.Include(b => b.Offer).Include(b => b.User);
-            return View(await appContextDB.ToListAsync());
+            User user = await _userManager.GetUserAsync(User);
+
+            if (user == null) { return NotFound(); }
+
+            ViewBag.ReturnAction = "Index";
+
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                return View(await _context.Booking
+                    .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation).ToListAsync());
+            }
+            else
+            {
+                return View(await _context.Booking
+                    .Where(b => b.UserId == user.Id)
+                    .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation).ToListAsync());
+            }
         }
 
-        // GET: Booking/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        // GET: Booking/HostIndex
+        [Authorize(Roles = "Host, Admin")]
+        public async Task<IActionResult> HostIndex()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            User user = await _userManager.GetUserAsync(User);
 
+            if (user == null) { return NotFound(); }
+
+            ViewBag.ReturnAction = "HostIndex";
+
+            return View("Index", await _context.Booking
+                .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation)
+                .Where(b => b.Offer.Accommodation.UserId == user.Id).ToListAsync());
+        }
+
+
+        // POST: Booking/Details/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(Guid id, string returnAction)
+        {
             var booking = await _context.Booking
                 .Include(b => b.Offer)
                 .Include(b => b.User)
+                .Include(b => b.Offer.Accommodation)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (booking == null)
             {
                 return NotFound();
             }
+
+            ViewBag.ReturnAction = returnAction;
 
             return View(booking);
         }
@@ -82,53 +113,13 @@ namespace BookingApp.Controllers
                 else
                 {
                     TempData["AlertType"] = "danger";
-                    TempData["AlertMsg"] = "Vous n'avez pas le montant nécessaire pour procéder à la réservation, il vous manque " +  (totalPrice-senderUser.Balance) + " € ! Veuillez <a href=\"/Identity/Account/Manage/Bookmark\">créditer votre compte</a>";
+                    TempData["AlertMsg"] = "Vous n'avez pas le montant nécessaire pour procéder à la réservation, il vous manque " +  (totalPrice-senderUser.Balance) + " € ! Veuillez <a href=\"/Identity/Account/Manage/Wallet\">créditer votre compte</a>";
 
                     return RedirectToAction("View", "Offer", new { id = booking.OfferId });
                 }
-
-                return RedirectToAction(nameof(Index));
             }
 
-            return View(nameof(Index));
-        }
-
-
-        // GET: Booking/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var booking = await _context.Booking
-                .Include(b => b.Offer)
-                .Include(b => b.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (booking == null)
-            {
-                return NotFound();
-            }
-
-            return View(booking);
-        }
-
-        // POST: Booking/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var booking = await _context.Booking.FindAsync(id);
-            _context.Booking.Remove(booking);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool BookingExists(Guid id)
-        {
-            return _context.Booking.Any(e => e.Id == id);
         }
     }
 }

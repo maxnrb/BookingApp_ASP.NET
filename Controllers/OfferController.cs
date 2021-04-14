@@ -27,8 +27,21 @@ namespace BookingApp.Controllers
         // GET: Offer
         public async Task<IActionResult> Index()
         {
-            var appContextDB = _context.Offers.Include(o => o.Accommodation);
-            return View(await appContextDB.ToListAsync());
+            User user = await _userManager.GetUserAsync(User);
+
+            if (user == null) { return NotFound(); }
+
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                return View(await _context.Offers
+                    .Include(o => o.Accommodation).ToListAsync());
+            }
+            else
+            {
+                return View(await _context.Offers
+                    .Include(o => o.Accommodation)
+                    .Where(o => o.Accommodation.UserId == user.Id).ToListAsync());
+            }
         }
 
         // GET: Offer/Details/5
@@ -51,9 +64,21 @@ namespace BookingApp.Controllers
         }
 
         // GET: Offer/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id");
+            User user = await _userManager.GetUserAsync(User);
+
+            if (user == null) { return NotFound(); }
+
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Name");
+            }
+            else
+            {
+                ViewData["AccommodationId"] = new SelectList(_context.Accommodations.Where(a => a.UserId == user.Id), "Id", "Name");
+            }
+
             return View();
         }
 
@@ -78,17 +103,12 @@ namespace BookingApp.Controllers
         // GET: Offer/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
 
             var offer = await _context.Offers.FindAsync(id);
-            if (offer == null)
-            {
-                return NotFound();
-            }
-            ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id", offer.AccommodationId);
+
+            if (offer == null) { return NotFound(); }
+
             return View(offer);
         }
 
@@ -212,30 +232,20 @@ namespace BookingApp.Controllers
 
         public async Task<IActionResult> AddBookmark(Guid id)
         {
-            var userId = _userManager.GetUserId(User);
+            await new BookmarkController(_context, _userManager.GetUserId(User)).Add(id);
 
-            if (userId != null)
-            {
-                await new BookmarkController(_context).Add(id, userId);
+            TempData["AlertType"] = "success";
+            TempData["AlertMsg"] = "Offre ajoutée aux favoris avec succès ! <a href=\"/Identity/Account/Manage/Bookmark\">Accédez à vos favoris</a>";
 
-                TempData["AlertType"] = "success";
-                TempData["AlertMsg"] = "Offre ajoutée aux favoris avec succès ! <a href=\"/Identity/Account/Manage/Bookmark\">Accédez à vos favoris</a>";
-            }
-            
             return RedirectToAction("View", new { id });
         }
 
         public async Task<IActionResult> DeleteBookmark(Guid id)
         {
-            var userId = _userManager.GetUserId(User);
+            await new BookmarkController(_context, _userManager.GetUserId(User)).Delete(id);
 
-            if (userId != null)
-            {
-                await new BookmarkController(_context).Delete(id, userId);
-
-                TempData["AlertType"] = "warning";
-                TempData["AlertMsg"] = "Offre supprimée des favoris avec succès ! <a href=\"/Identity/Account/Manage/Bookmark\">Accédez à vos favoris</a>";
-            }
+            TempData["AlertType"] = "warning";
+            TempData["AlertMsg"] = "Offre supprimée des favoris avec succès ! <a href=\"/Identity/Account/Manage/Bookmark\">Accédez à vos favoris</a>";
 
             return RedirectToAction("View", new { id });
         }

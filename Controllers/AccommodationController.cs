@@ -32,7 +32,21 @@ namespace BookingApp.Controllers
         // GET: Accommodation
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Accommodations.Include(a => a.Address).Include(a => a.User).ToListAsync());
+            User user = await _userManager.GetUserAsync(User);
+
+            if (user == null) { return NotFound(); }
+
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                return View(await _context.Accommodations
+                    .Include(a => a.Address).Include(a => a.User).ToListAsync());
+            }
+            else
+            {
+                return View(await _context.Accommodations
+                    .Where(a => a.UserId == user.Id)
+                    .Include(a => a.Address).Include(a => a.User).ToListAsync());
+            }
         }
 
         // GET: Accommodation/Details/5
@@ -43,11 +57,11 @@ namespace BookingApp.Controllers
             }
 
             var accommodation = await _context.Accommodations
-                // Include accommodation offers and address
                 .Include(a => a.Offers)
                 .Include(a => a.Address)
                 .Include(a => a.User)
                 .Include(a => a.Pictures)
+                .Include(a => a.HouseRules)
                 .Include(a => a.Rooms)
                 .ThenInclude(r => r.Amenities)
                 .FirstOrDefaultAsync(m => m.Id == id);
