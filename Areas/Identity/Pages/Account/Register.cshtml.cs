@@ -62,7 +62,9 @@ namespace BookingApp.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required(ErrorMessage = "Vous devez entrer un mot de passe")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Le mot de passe doit contenir au minimum {2} et au maximum {1} caractères", MinimumLength = 6)]
+            [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!,@,#,$,%,^,&,*,?,_,~,-,£,€]).*$",
+                ErrorMessage = "Le mot de passe doit contenir au moins une lettre minuscule, une majuscule, un chiffre, un caractère spécial (!, @, #, $, %, ^, &, *, ?, _, ~, -, £, €) et posséder entre 6 et 100 caractères")]
             [DataType(DataType.Password)]
             [Display(Name = "Mot de passe")]
             public string Password { get; set; }
