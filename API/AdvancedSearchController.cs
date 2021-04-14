@@ -34,12 +34,36 @@ namespace BookingApp
 
             if (arrivalDateTime < departureDateTime && !city.Equals(""))
             {
-                 offers = await _context.Offers
-                     .Where(o => o.StartAvailability <= arrivalDateTime && o.EndAvailability > arrivalDateTime && o.EndAvailability >= departureDateTime)
-                     .Where(o => o.Accommodation.Address.City == city && o.Accommodation.MaxTraveler >= nbPersonInt)
-                     .Include(o => o.Accommodation.Pictures)
-                     .Include(o => o.Accommodation.Address)
-                     .ToListAsync();
+                offers = await _context.Offers
+                    .Where(o => o.StartAvailability <= arrivalDateTime && o.EndAvailability > arrivalDateTime && o.EndAvailability >= departureDateTime)
+                    .Where(o => o.Accommodation.Address.City == city && o.Accommodation.MaxTraveler >= nbPersonInt)
+                    //.Include(o => o.Accommodation.Pictures)
+                    //.Include(o => o.Accommodation.Address)
+                    .Select(o => new Offer {
+                        AddingDateTime = o.AddingDateTime,
+                        StartAvailability = o.StartAvailability,
+                        EndAvailability = o.EndAvailability,
+                        PricePerNight = o.PricePerNight,
+                        CleaningFee = o.CleaningFee,
+
+                        Accommodation = new Accommodation {
+                            Name = o.Accommodation.Name,
+                            Type = o.Accommodation.Type,
+                            Description = o.Accommodation.Description,
+                            MaxTraveler = o.Accommodation.MaxTraveler,
+
+                            HouseRules = o.Accommodation.HouseRules,
+
+                            Address = new Address
+                            {
+                                City = o.Accommodation.Address.City,
+                                Country = o.Accommodation.Address.Country
+                            },
+
+                            Pictures = o.Accommodation.Pictures
+                        }
+                    })
+                    .ToListAsync();
             }
 
             return offers;
