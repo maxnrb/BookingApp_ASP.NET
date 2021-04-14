@@ -54,7 +54,7 @@ Then, run the following command :
 dotnet user-secrets init 
 ```
 
-#### Google ([See documentation](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-5.0)) :
+#### Google ([See documentation for setup](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-5.0)) :
 * Store the Google client ID and secret :
     
     ```powershell
