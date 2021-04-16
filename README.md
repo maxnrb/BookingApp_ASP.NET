@@ -81,4 +81,4 @@ dotnet user-secrets init
 
 This project is licensed under the CC Attribution-NonCommercial-NoDerivatives 4.0 International Public License
 
-See the [LICENSE.md](https://github.com/maximenrb/BookingApp_ASP.NET/blob/master/LICENSE.MD) file for details
+See the [LICENSE.md](https://github.com/maximenrb/BookingApp_ASP.NET/blob/master/LICENSE.md) file for details
