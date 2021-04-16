@@ -73,3 +73,12 @@ dotnet user-secrets init
 - [MaximeNrb](https://github.com/maximenrb)
 - [Amot98](https://github.com/Amot98)
 - [Lekolix](https://github.com/Lekolix)
+
+
+## License
+
+<img align="left" width= "150" alt="CC Attribution-NonCommercial-NoDerivatives 4.0 International Public License Logo" src="https://raw.githubusercontent.com/maximenrb/BookingApp_ASP.NET/master/git_img/by-nc-nd.eu.png">
+
+This project is licensed under the CC Attribution-NonCommercial-NoDerivatives 4.0 International Public License
+
+See the [LICENSE.md](https://github.com/maximenrb/BookingApp_ASP.NET/blob/master/LICENSE.MD) file for details
