@@ -1,7 +1,6 @@
 # Booking Web App
 
 ## Functionality
-### Done
 - Home page:
   - Research offers
   - View last offers
