@@ -75,7 +75,7 @@ dotnet user-secrets init
 - [Bootstrap](https://getbootstrap.com/) - Bootstrap is a free and open-source CSS framework directed at responsive, designed for front-end web development.
 
 
-## Author
+## Authors
 - [MaximeNrb](https://github.com/maximenrb)
 - [Amot98](https://github.com/Amot98)
 - [Lekolix](https://github.com/Lekolix)
