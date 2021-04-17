@@ -1,3 +1,5 @@
+# Booking Web App
+
 ## Functionality
 ### Done
 - Home page:
@@ -21,6 +23,10 @@
 - Booking page with accommodation and offer informations
 - Offers bookmark
 - E-Wallet and transaction
+
+### Home Page Preview
+
+![Home Page Screenshot](https://raw.githubusercontent.com/maximenrb/BookingApp_ASP.NET/master/git_img/screencapture-home_page.png)
 
 ## Installation
 
