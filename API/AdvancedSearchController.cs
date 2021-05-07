@@ -40,6 +40,7 @@ namespace BookingApp
                     //.Include(o => o.Accommodation.Pictures)
                     //.Include(o => o.Accommodation.Address)
                     .Select(o => new Offer {
+                        Id = o.Id,
                         AddingDateTime = o.AddingDateTime,
                         StartAvailability = o.StartAvailability,
                         EndAvailability = o.EndAvailability,
@@ -51,8 +52,6 @@ namespace BookingApp
                             Type = o.Accommodation.Type,
                             Description = o.Accommodation.Description,
                             MaxTraveler = o.Accommodation.MaxTraveler,
-
-                            HouseRules = o.Accommodation.HouseRules,
 
                             Address = new Address
                             {
